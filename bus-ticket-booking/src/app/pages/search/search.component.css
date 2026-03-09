@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.search-box {
+  margin-top: -20px;
+}
