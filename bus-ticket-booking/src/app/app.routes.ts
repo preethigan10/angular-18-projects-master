@@ -23,7 +23,7 @@ export const routes: Routes = [
         component: SearchComponent
     },
     {
-        path: 'search-result',
+        path: 'search-result/:fromId/:toId/:date',
         component: SearchResultComponent
     },
 

@@ -5,5 +5,14 @@
 }
 
 .search-box {
-  margin-top: -20px;
+  margin-top: -150px;
+  min-height: 320px;
+}
+
+.btn-primary {
+    margin-top: 30px;
+}
+
+.d-flex{
+    background-color: darkgray;
 }

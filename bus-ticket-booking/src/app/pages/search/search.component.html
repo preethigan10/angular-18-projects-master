@@ -1,45 +1,47 @@
 <div class="d-flex justify-content-center align-items-center min-vh-100">
-  <div class="col-md-5 col-lg-4 mx-auto">
+  <div class="col-md-5 col-lg-6 mx-auto">
     <div class="search-box p-3 shadow rounded bg-white">
       <h2 class="text-center mb-3">
         <i class="fa fa-ticket me-2"></i>Book Your Bus Ticket
       </h2>
       <form novalidate="" class="ng-untouched ng-pristine ng-invalid">
-        <div class="row g-3">
-          <div class="col-12">
+        <div class="row gy-3 gx-3">
+          <div class="col-6">
             <label class="form-label"
               ><i class="fa fa-map-marker me-1"></i>From</label
             >
-            <select
-              name="fromLocationId"
-              class="form-select ng-untouched ng-pristine ng-valid"
-            >
-              <option></option>
+            <select class="form-select ng-untouched ng-pristine ng-valid" 
+            name="fromLocationId" [(ngModel)]="searchObj.fromLocationId">
+             <option value="">Select From Location</option>
+              @for (loc of locationList; track $index) {
+                <option [value]="loc.locationId" >{{loc.locationName}}  {{loc.code}}</option>
+              }
             </select>
           </div>
-          <div class="col-12">
+          <div class="col-6">
             <label class="form-label"
               ><i class="fa fa-map-marker me-1"></i>To</label
             >
-            <select
-              name="toLocationId"
-              class="form-select ng-untouched ng-pristine ng-valid"
-            >
-              <option></option>
+            <select class="form-select ng-untouched ng-pristine ng-valid"
+            name="toLocationId" [(ngModel)]="searchObj.toLocationId">
+             <option value="">Select To Location</option>
+              @for (loc of locationList; track $index) {
+                <option [value]="loc.locationId" >{{loc.locationName}} {{loc.code}}</option>
+              }
             </select>
           </div>
-          <div class="col-12">
+          <div class="col-6">
             <label class="form-label"
-              ><i class="fa fa-calendar-check-o me-1"></i>Date of Journey</label
+              >Date of Journey</label
             ><input
               type="date"
               name="date"
               required=""
-              class="form-control ng-untouched ng-pristine ng-invalid"
+              class="form-control ng-untouched ng-pristine ng-invalid" [(ngModel)]="searchObj.date"
             />
           </div>
           <div class="col-12 text-center">
-            <button type="button" class="btn btn-primary btn-lg w-100">
+            <button type="button" class="btn btn-primary btn-lg w-100" (click)="searchBus()">
               <i class="fa fa-search-plus me-2"></i>Search Buses
             </button>
           </div>
