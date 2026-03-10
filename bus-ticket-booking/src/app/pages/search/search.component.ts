@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { BusLocationsService } from '../../services/bus-locations.service';
-import { Search } from '../../model/search';
+import { ISearch } from '../../model/search';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-search',
@@ -17,14 +17,16 @@ export class SearchComponent implements OnInit{
 
   locationList: any[] = [];
 
-  searchObj: Search = {
+  searchObj: ISearch = {
       fromLocationId: 0,
       toLocationId: 0,
       date: ''
   };
 
-  constructor(private busLocationServices: BusLocationsService, private router: Router){
+  searchService = inject(SearchService);
+  router = inject(Router);
 
+  constructor(){
   }
 
   ngOnInit(): void {
@@ -32,7 +34,7 @@ export class SearchComponent implements OnInit{
   }
 
   getBusLocations () {    
-    this.busLocationServices.getAllBusLocations().subscribe((res: any) => {
+    this.searchService.getAllBusLocations().subscribe((res: any) => {
       this.locationList = res;
     });
   }

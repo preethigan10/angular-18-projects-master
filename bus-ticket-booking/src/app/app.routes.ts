@@ -11,7 +11,7 @@ export const routes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: 'book-ticket',
+        path: 'book-ticket/:scheduleId',
         component: BookTicketComponent
     },
     {

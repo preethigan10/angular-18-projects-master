@@ -1,1 +1,65 @@
-<p>search-result works!</p>
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Available Buses</h2>
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-primary">
+        <i class="fa fa-filter me-1"></i>Filter</button
+      ><button class="btn btn-outline-primary">
+        <i class="fa fa-sort me-1"></i>Sort
+      </button>
+    </div>
+  </div>
+  @for (bus of availableBuses; track $index){
+    <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-3">
+              <h5 class="card-title">
+                <i class="fa fa-bus me-2"></i>{{bus?.busName}}
+              </h5>
+              <p class="text-muted mb-0">
+                <i class="fa fa-bed me-1"></i>AC Sleeper
+              </p>
+              <div class="mt-2">
+                <span class="badge bg-success"
+                  ><i class="fa fa-star me-1"></i>4.5 </span
+                ><span class="badge bg-info ms-1"
+                  ><i class="fa fa-random me-1"></i>Fast
+                </span>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <p class="mb-0 text-muted">Departure</p>
+              <h6 class="mb-0">{{bus?.departureTime | date:'HH:mm:ss'}}</h6>
+            </div>
+            <div class="col-md-2">
+              <p class="mb-0 text-muted">Duration</p>
+              <h6 class="mb-0">8h 30m</h6>
+            </div>
+            <div class="col-md-2">
+              <p class="mb-0 text-muted">Arrival</p>
+              <h6 class="mb-0">{{bus?.arrivalTime | date:'HH:mm:ss'}}</h6>
+            </div>
+            <div class="col-md-2">
+              <p class="mb-0 text-muted">Price</p>
+              <h6 class="mb-0">{{bus?.price}}</h6>
+              <small class="text-success"
+                ><i class="fa fa-usd me-1"></i>Best Price
+              </small>
+            </div>
+            <div class="col-md-1">
+              <a [routerLink]="'/book-ticket/' + bus?.scheduleId"
+                class="btn btn-primary w-100"
+                href="/bus_booking_app_angular/book-ticket/3432"
+                ><i class="fa fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

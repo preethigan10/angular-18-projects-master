@@ -1,37 +1,43 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { BusLocationsService } from '../../services/bus-locations.service';
-import { ActivatedRoute } from '@angular/router';
-import { Search } from '../../model/search';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ISearchBus, ISearch } from '../../model/search';
+import { SearchService } from '../../services/search.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-search-result',
-  imports: [],
+  imports: [DatePipe, RouterLink],
   templateUrl: './search-result.component.html',
   styleUrl: './search-result.component.css'
 })
 export class SearchResultComponent implements OnInit {
 
-  searchObj: Search = {
+  searchObj: ISearch = {
         fromLocationId: 0,
         toLocationId: 0,
         date: ''
   };
 
-  availableBuses: any[] = [];
+  availableBuses: ISearchBus[] = [];
 
   activatedRoute = inject(ActivatedRoute);
+  searchService = inject(SearchService);
+  router = inject(Router);
 
-  constructor(private busLocationServices: BusLocationsService) {    
+  constructor() {    
     this.activatedRoute.params.subscribe((res: any) =>{
       this.searchObj.fromLocationId = res.fromId;
       this.searchObj.toLocationId = res.toId;
       this.searchObj.date = res.date;
-      this.busLocationServices.searchBus(this.searchObj).subscribe((res: any) => {
-        this.availableBuses = res;
-        console.log(res);
-      });
+      this.getBuses();
     });  
 
+  }
+
+  getBuses(){
+    this.searchService.searchBus(this.searchObj).subscribe((res: any) => {
+      this.availableBuses = res;
+    });
   }
 
   ngOnInit(): void {
@@ -44,6 +50,12 @@ export class SearchResultComponent implements OnInit {
     //   });
     // }
   }
+
+  // goToBooking(schId: number){
+  //   this.router.navigate(['/book-ticket', schId]);    
+  // }
+
+  
 
 
 
