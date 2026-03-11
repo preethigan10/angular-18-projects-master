@@ -13,3 +13,6 @@ Third Page:
 displays number of seats aviable and already booked and by entering contact detials for that particular seats tickets are booked.
 
 
+
+2. ECommerce Application:
+   using Prox server
