@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IScheduledBus, ISearch } from '../model/search';
+import { IBooking, IScheduledBus, ISearch } from '../model/search';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +26,13 @@ export class SearchService {
 
   getBusScheduleById(schldId: number): Observable<IScheduledBus>{
     return this.http.get<IScheduledBus>(`${this.apiUrl}GetBusScheduleById?id=${schldId}`);
+  }
+
+  postBusBooking(bookingDetails: IBooking) {
+    return this.http.post(`${this.apiUrl}PostBusBooking`, bookingDetails);
+  }
+
+  getAllBookedSeats(schldId: number){
+    return this.http.get(`${this.apiUrl}getBookedSeats?shceduleId=${schldId}`);
   }
 }

@@ -36,12 +36,19 @@ export interface IScheduledBus {
 }
 
 
-export interface IBooking {
-  bookingId: number
-  custId: number
-  bookingDate: string
-  scheduleId: number
-  busBookingPassengers: IBusBookingPassenger[]
+export class IBooking {
+  bookingId: number;
+  custId: number;
+  bookingDate: Date;
+  scheduleId: number;
+  busBookingPassengers: IBusBookingPassenger[];
+  constructor() {
+    this.bookingId= 0;
+    this.custId= 0;
+    this.bookingDate= new Date();
+    this.scheduleId= 0;
+    this.busBookingPassengers= [];
+  }
 }
 
 export class IBusBookingPassenger {
