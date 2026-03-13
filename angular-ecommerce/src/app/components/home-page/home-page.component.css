@@ -1,0 +1,40 @@
+.category-item {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.category-item:hover {
+  background: #f0f4ff;
+  color: #0d6efd;
+}
+
+.active-category {
+  background: #0d6efd;
+  color: white;
+  font-weight: 500;
+}
+.category-item {
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 500;
+}
+
+.list-group-item:first-child {
+  font-weight: 600;
+}
+
+.category-info {
+  background: #f8f9fa;
+  padding: 10px 15px;
+  border-radius: 6px;
+}
+
+.product-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}

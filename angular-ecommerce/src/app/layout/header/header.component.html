@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg px-4 header-bg">
+  <!-- Left: Logo -->
+  <a class="navbar-brand fw-bold text-dark" routerLink="/home"> MyStore </a>
+
+  <!-- Center: Search -->
+  <div class="mx-auto search-box w-50">
+    <div class="input-group">
+      <input
+        type="text" 
+        class="form-control"
+        placeholder="Search products..."
+        [(ngModel)]="searchQuery"
+        (input)="filterProducts()"
+        name="searchQuery"
+      />
+
+      <button class="btn btn-light border" (click)="searchProduct()">
+        <i class="bi bi-search text-dark"></i>
+      </button>
+    </div>
+
+    <ul class="list-group suggestion-box" *ngIf="searchQuery">
+        <li
+        class="list-group-item"
+        *ngFor="let product of filteredProducts"
+        (click)="selectProduct(product)"
+        >
+        {{ product.title }}
+        </li>
+    </ul>
+  </div>
+
+  <!-- Right -->
+  <div class="d-flex align-items-center gap-4">
+    <!-- Cart -->
+    <button class="btn position-relative">
+      <i class="bi bi-cart3 fs-4 text-dark"></i>
+
+      <span
+        class="position-absolute top-0 start-60 badge bg-danger"
+      >
+        {{ cartItemsNumber }}
+      </span>
+    </button>
+
+    <button class="btn btn-outline-primary btn-sm">Sign In</button>
+
+    <button class="btn btn-primary btn-sm">Sign Up</button>
+  </div>
+</nav>

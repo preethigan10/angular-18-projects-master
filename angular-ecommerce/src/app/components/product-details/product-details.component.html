@@ -1,0 +1,107 @@
+<div class="container mt-4">
+  <div class="back-link mb-3" (click)="goBack()">
+    <i class="bi bi-arrow-left"></i>
+    Back to Products
+  </div>
+  <div class="row">
+    <!-- Product Image -->
+    <div class="col-md-5 text-center">
+      <img [src]="product().image" class="img-fluid product-image" />
+      <div class="product-benefits">
+        <div class="benefit-item">
+          <i class="bi bi-truck"></i>
+          <span>Free Shipping</span>
+        </div>
+
+        <div class="benefit-item">
+          <i class="bi bi-arrow-repeat"></i>
+          <span>30 Day Return Policy</span>
+        </div>
+
+        <div class="benefit-item">
+          <i class="bi bi-shield-check"></i>
+          <span>2 Year Warranty</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Details -->
+    <div class="col-md-7">
+      <h3 class="mb-3">{{ product().title }}</h3>
+
+      <!-- Category -->
+      <small class="text-muted d-block mb-2">
+        Category: {{ product().category }}
+      </small>
+
+      <!-- Rating -->
+      <div class="rating mb-3">
+        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+          <i
+            class="bi"
+            [ngClass]="
+              star <= product().rating
+                ? 'bi-star-fill text-warning'
+                : 'bi-star text-muted'
+            "
+          ></i>
+        </ng-container>
+        <span class="text-muted small">({{ product().rating }})</span>
+      </div>
+
+      <!-- Stock -->
+      <div class="mb-3">
+        <span class="badge bg-success" *ngIf="product().inStock">
+          In Stock
+        </span>
+
+        <span class="badge bg-danger" *ngIf="!product().inStock">
+          Out of Stock
+        </span>
+      </div>
+      <p class="text-muted">
+        {{ product().description }}
+      </p>
+
+      <h4 class="text-success mb-3">₹{{ product().price }}</h4>
+
+      <!-- Quantity Selector -->
+      <div class="d-flex align-items-center mb-4">
+        <button
+          class="btn btn-outline-secondary"
+          (click)="decreaseQty()"
+          [disabled]="product().inStock == false"
+        >
+          -
+        </button>
+
+        <span class="mx-3 fw-bold">
+          {{ quantity }}
+        </span>
+
+        <button
+          class="btn btn-outline-secondary"
+          (click)="increaseQty()"
+          [disabled]="
+            quantity == product().quantity || product().inStock == false
+          "
+        >
+          +
+        </button>
+      </div>
+      <p class="text-danger small" *ngIf="quantity === product().quantity">
+        Maximum stock reached
+      </p>
+
+      <div class="mt-4">
+        <button
+          class="btn btn-primary add-cart-btn mb-3"
+          [disabled]="product().inStock == false"
+        >
+          <i class="bi bi-cart-plus me-2"></i>Add to Cart
+        </button>
+      </div>
+      <!-- policy -->
+    </div>
+  </div>
+</div>
