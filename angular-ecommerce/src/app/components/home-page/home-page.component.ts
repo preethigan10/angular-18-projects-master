@@ -2,51 +2,61 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProductsService } from '../../services/products.service';
-import { Product } from '../../model/interface';
+import { Product, ProductSelected } from '../../model/interface';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css'
+  styleUrl: './home-page.component.css',
 })
 export class HomePageComponent implements OnInit {
   products: Product[] = []; // all products
   productService = inject(ProductsService);
-  categories: any[]= [];
+  categories: any[] = [];
   filteredProducts: Product[] = [];
   selectedCategory: string = 'all';
   router = inject(Router);
+  cartService = inject(CartService);
 
   constructor() {
-     this.productService.getProducts().subscribe((res: any) => {
+    this.productService.getProducts().subscribe((res: any) => {
       this.products = res;
       this.filteredProducts = this.products;
-      const allCategories = this.products.map(product => product.category);
+      const allCategories = this.products.map((product) => product.category);
       this.categories = [...new Set(allCategories)];
     });
   }
 
-  ngOnInit(): void {
-   
-  }
+  ngOnInit(): void {}
 
-  filterByCategory(cat:string){
+  filterByCategory(cat: string) {
     this.selectedCategory = cat;
-    this.filteredProducts = this.products.filter(
-      p => p.category === cat
-    );
+    this.filteredProducts = this.products.filter((p) => p.category === cat);
   }
 
-  showAllProducts(){
+  showAllProducts() {
     this.selectedCategory = 'all';
     this.filteredProducts = this.products;
   }
 
-  goToProductDetails(id: number){
-    this.router.navigate(['/product/'+ id]);
+  goToProductDetails(id: number) {
+    this.router.navigate(['/product/' + id]);
   }
-  
+
+  addToCart(product: Product) {
+     const prodSelected = new ProductSelected();
+      prodSelected.id = product.id;
+      prodSelected.title = product.title;
+      prodSelected.price = product.price;
+      prodSelected.category = product.category;
+      prodSelected.image = product.image;
+      prodSelected.quantity = 1;
+      this.cartService.addItem(prodSelected);
+  }
+
+
 }

@@ -6,7 +6,7 @@
   <div class="mx-auto search-box w-50">
     <div class="input-group">
       <input
-        type="text" 
+        type="text"
         class="form-control"
         placeholder="Search products..."
         [(ngModel)]="searchQuery"
@@ -20,27 +20,27 @@
     </div>
 
     <ul class="list-group suggestion-box" *ngIf="searchQuery">
-        <li
+      <li
         class="list-group-item"
         *ngFor="let product of filteredProducts"
         (click)="selectProduct(product)"
-        >
+      >
         {{ product.title }}
-        </li>
+      </li>
     </ul>
   </div>
 
   <!-- Right -->
   <div class="d-flex align-items-center gap-4">
     <!-- Cart -->
-    <button class="btn position-relative">
+    <button class="btn position-relative" (click)="goToCartPage()">
       <i class="bi bi-cart3 fs-4 text-dark"></i>
 
-      <span
-        class="position-absolute top-0 start-60 badge bg-danger"
-      >
-        {{ cartItemsNumber }}
-      </span>
+      @if (cartItemsNumber !== 0) {
+        <span class="position-absolute top-0 start-60 badge bg-danger">
+          {{ cartItemsNumber }}
+        </span>
+      }
     </button>
 
     <button class="btn btn-outline-primary btn-sm">Sign In</button>

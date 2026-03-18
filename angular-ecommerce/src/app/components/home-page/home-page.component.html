@@ -35,18 +35,17 @@
             {{ selectedCategory === "all" ? "All Products" : selectedCategory }}
           </h5>
 
-          <span class="mb-0">
-            {{ filteredProducts.length }} Products
-          </span>
+          <span class="mb-0"> {{ filteredProducts.length }} Products </span>
         </div>
         <div class="col-md-4 mb-4" *ngFor="let product of filteredProducts">
           <!-- product cards -->
-          <div class="card product-card h-100" (click)="goToProductDetails(product.id)">
+          <div class="card product-card h-100">
             <img
               [src]="product.image"
               class="card-img-top"
               height="200"
               style="object-fit: cover"
+              (click)="goToProductDetails(product.id)"
             />
 
             <div class="card-body">
@@ -67,8 +66,13 @@
               <span class="text-success fs-5 fw-bold">
                 ₹{{ product.price }}
               </span>
-
-              <button class="btn btn-primary btn-sm">Add to Cart</button>
+              <!-- Add to Cart / Quantity -->              
+                <button
+                  class="btn btn-primary btn-sm"
+                  (click)="addToCart(product)"
+                >
+                  Add to Cart
+                </button>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Product } from '../../model/interface';
 import { ProductsService } from '../../services/products.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -15,17 +16,26 @@ import { ProductsService } from '../../services/products.service';
 })
 export class HeaderComponent implements OnInit {
   searchQuery: string = '';
-  cartItemsNumber: number = 10;
+  cartItemsNumber: number = 0;
 
   products: Product[] = []; // all products
   filteredProducts: Product[] = []; // products shown on screen
   productService = inject(ProductsService);
-    router = inject(Router);
+  router = inject(Router);
+  cartService = inject(CartService);
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe((res: any) => {
       this.products = res;
     });
+    this.cartService.getCartItems().subscribe((res: any)=>{
+      const allQuantity = res.map((item: any) => item.quantity);
+      const sum = allQuantity.reduce((acc: any, val: any) => acc + val, 0);
+      if(sum){
+        this.cartItemsNumber = sum;
+      } else {this.cartItemsNumber = 0;}
+      
+    })
   }
 
   filterProducts() {
@@ -34,11 +44,15 @@ export class HeaderComponent implements OnInit {
     );
   }
 
-  selectProduct(product: Product){
+  selectProduct(product: Product) {
     this.searchQuery = product.title;
     this.filteredProducts = [];
-    this.router.navigate(['/product/'+ product.id]);
+    this.router.navigate(['/product/' + product.id]);
   }
 
   searchProduct() {}
+
+  goToCartPage(){
+    this.router.navigate(['/cart/']);
+  }
 }

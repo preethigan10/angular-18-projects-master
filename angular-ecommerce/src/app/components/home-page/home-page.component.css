@@ -38,3 +38,33 @@
   transform: translateY(-6px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
+
+
+
+.qty-box{
+display:inline-flex;
+align-items:center;
+border:1px solid #ddd;
+border-radius:20px;
+overflow:hidden;
+}
+
+.qty-btn{
+border:none;
+background:#f8f9fa;
+padding:4px 10px;
+font-size:16px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.qty-btn:hover{
+background:#e2e6ea;
+}
+
+.qty-value{
+padding:0 8px;
+font-weight:500;
+min-width:20px;
+text-align:center;
+}

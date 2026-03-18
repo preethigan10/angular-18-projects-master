@@ -6,7 +6,7 @@
   <div class="row">
     <!-- Product Image -->
     <div class="col-md-5 text-center">
-      <img [src]="product().image" class="img-fluid product-image" />
+      <img [src]="product.image" class="img-fluid product-image" />
       <div class="product-benefits">
         <div class="benefit-item">
           <i class="bi bi-truck"></i>
@@ -27,11 +27,11 @@
 
     <!-- Product Details -->
     <div class="col-md-7">
-      <h3 class="mb-3">{{ product().title }}</h3>
+      <h3 class="mb-3">{{ product.title }}</h3>
 
       <!-- Category -->
       <small class="text-muted d-block mb-2">
-        Category: {{ product().category }}
+        Category: {{ product.category }}
       </small>
 
       <!-- Rating -->
@@ -40,37 +40,37 @@
           <i
             class="bi"
             [ngClass]="
-              star <= product().rating
+              star <= product.rating
                 ? 'bi-star-fill text-warning'
                 : 'bi-star text-muted'
             "
           ></i>
         </ng-container>
-        <span class="text-muted small">({{ product().rating }})</span>
+        <span class="text-muted small">({{ product.rating }})</span>
       </div>
 
       <!-- Stock -->
       <div class="mb-3">
-        <span class="badge bg-success" *ngIf="product().inStock">
+        <span class="badge bg-success" *ngIf="product.inStock">
           In Stock
         </span>
 
-        <span class="badge bg-danger" *ngIf="!product().inStock">
+        <span class="badge bg-danger" *ngIf="!product.inStock">
           Out of Stock
         </span>
       </div>
       <p class="text-muted">
-        {{ product().description }}
+        {{ product.description }}
       </p>
 
-      <h4 class="text-success mb-3">₹{{ product().price }}</h4>
+      <h4 class="text-success mb-3">₹{{ product.price }}</h4>
 
       <!-- Quantity Selector -->
       <div class="d-flex align-items-center mb-4">
         <button
           class="btn btn-outline-secondary"
           (click)="decreaseQty()"
-          [disabled]="product().inStock == false"
+          [disabled]="product.inStock == false"
         >
           -
         </button>
@@ -83,20 +83,20 @@
           class="btn btn-outline-secondary"
           (click)="increaseQty()"
           [disabled]="
-            quantity == product().quantity || product().inStock == false
+            quantity == product.quantity || product.inStock == false
           "
         >
           +
         </button>
       </div>
-      <p class="text-danger small" *ngIf="quantity === product().quantity">
+      <p class="text-danger small" *ngIf="quantity === product.quantity">
         Maximum stock reached
       </p>
 
       <div class="mt-4">
-        <button
+        <button (click)="addToCart()"
           class="btn btn-primary add-cart-btn mb-3"
-          [disabled]="product().inStock == false"
+          [disabled]="product.inStock == false"
         >
           <i class="bi bi-cart-plus me-2"></i>Add to Cart
         </button>
