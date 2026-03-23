@@ -44,3 +44,13 @@ export interface Alert {
   type: 'success' | 'danger' | 'info';
   message: string;
 }
+
+
+export interface User {
+    id: number;
+    name: string;
+    email: any;
+    password: any;
+    role: 'vendor' | 'customer';
+    vendorName: string;
+}

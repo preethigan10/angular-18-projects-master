@@ -1,9 +1,15 @@
+<app-alert></app-alert>
 <div class="container mt-4">
   <div class="back-link mb-3" (click)="goBack()">
     <i class="bi bi-arrow-left"></i>
     Back to Products
   </div>
-  <h4 class="mb-4 fw-bold">Shopping Cart</h4>
+  <h4 class="mb-4 fw-bold">
+    Shopping Cart
+    @if (cartService.cartItemsNumber(); as cart) {
+      ({{ cart }} items)
+    }
+  </h4>
 
   <div class="row">
     <!-- LEFT SIDE -->
@@ -29,12 +35,24 @@
           </div>
 
           <!-- Qty -->
-          <div class="qty-box m-3">
-            <button (click)="decreaseQty(item)" [disabled]="item.cartQty == 1">-</button>
+          <div class="qty-box m-3 align-items-center justify-content-center">
+            <button (click)="decreaseQty(item)" [disabled]="item.cartQty == 1">
+              -
+            </button>
 
             <span>{{ item.cartQty }}</span>
 
-            <button (click)="increaseQty(item)" [disabled]="item.cartQty === item.quantity">+</button>
+            <button
+              (click)="increaseQty(item)"
+              [disabled]="item.cartQty === item.quantity"
+            >
+              +
+            </button>
+          </div>
+
+          <!-- ✅ Total price for this item -->
+          <div class="mt-1 fw-semibold text-primary totalPrice">
+            ₹{{ item.price * item.cartQty }}
           </div>
 
           <!-- Remove -->
@@ -48,7 +66,7 @@
     <!-- RIGHT SIDE SUMMARY -->
     <div class="col-lg-4">
       <div class="summary-box">
-        <h6 class="fw-bold mb-3">Order Summary</h6>
+        <h5 class="fw-bold mb-3">Order Summary</h5>
 
         <div class="d-flex justify-content-between mb-2">
           <span>Subtotal</span>
@@ -67,8 +85,13 @@
           <span>₹{{ totalPrice }}</span>
         </div>
 
-        <button class="btn btn-dark w-100 py-2">Proceed to Checkout</button>
+        <button class="btn btn-primary w-100 py-2" (click)="goTocheckOut()">Proceed to Checkout</button>
       </div>
     </div>
   </div>
 </div>
+
+<app-sign-in [isVisible]="isVisible" (closePopup)="closePopup()"></app-sign-in>
+
+
+

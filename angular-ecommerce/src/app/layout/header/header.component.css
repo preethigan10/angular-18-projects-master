@@ -1,0 +1,41 @@
+/* PROFILE ICON */
+.profile {
+  font-size: 28px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* DROPDOWN BOX */
+.profile-dropdown {
+  position: absolute;
+  right: 20px;
+  top: 60px;
+  width: 220px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  padding: 15px;
+  z-index: 1000;
+}
+
+/* USER INFO */
+.user-info {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* LOGOUT */
+.logout {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #dc3545;
+}
+
+.logout:hover {
+  background: #f8f9fa;
+  /* padding: 5px; */
+  border-radius: 5px;
+}

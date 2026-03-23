@@ -1,0 +1,88 @@
+<!-- BACKDROP -->
+<div class="overlay" *ngIf="isVisible">
+
+  <!-- POPUP -->
+  <div class="login-modal">
+
+    <!-- CLOSE -->
+    <span class="close-btn" (click)="close()">
+      <i class="bi bi-x-lg"></i>
+    </span>
+
+    <h4 class="fw-bold mb-1">Sign Up</h4>
+    <p class="text-muted mb-3">
+      Join us and start shopping today
+    </p>
+
+    <!-- NAME -->
+    <div class="input-group mb-3">
+      <span class="input-group-text">
+        <i class="bi bi-person-fill"></i>
+      </span>
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Enter name"
+        [(ngModel)]="user.name"
+      />
+    </div>
+
+    <!-- EMAIL -->
+    <div class="input-group mb-3">
+      <span class="input-group-text">
+        <i class="bi bi-envelope-fill"></i>
+      </span>
+      <input 
+        type="email" 
+        class="form-control" 
+        placeholder="Enter email"
+        [(ngModel)]="user.email"
+      />
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="input-group mb-3">
+      <span class="input-group-text">
+        <i class="bi bi-lock-fill"></i>
+      </span>
+      <input 
+        [type]="showPassword ? 'text' : 'password'" 
+        class="form-control" 
+        placeholder="Enter password"
+        [(ngModel)]="user.password"
+      />
+      <span class="input-group-text" (click)="togglePassword()" style="cursor:pointer">
+        <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
+      </span>
+    </div>
+
+    <!-- CONFIRM PASSWORD -->
+    <div class="input-group mb-3">
+      <span class="input-group-text">
+        <i class="bi bi-lock-fill"></i>
+      </span>
+      <input 
+        [type]="showConfirmPassword ? 'text' : 'password'" 
+        class="form-control" 
+        placeholder="Confirm password"
+      />
+      <span class="input-group-text" (click)="toggleConfirmPassword()" style="cursor:pointer">
+        <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
+      </span>
+    </div>
+
+    <!-- BUTTON -->
+    <button class="btn btn-primary w-100 py-2 mb-3" (click)="createAccount(user)">
+      Create Account
+    </button>
+
+    <!-- SIGN IN -->
+    <p class="text-center mb-0">
+      Already have an account?
+      <span class="text-primary fw-semibold" style="cursor:pointer" (click)="goToLogin()">
+        Sign In
+      </span>
+    </p>
+
+  </div>
+</div>

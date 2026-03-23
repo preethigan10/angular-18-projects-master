@@ -1,0 +1,37 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="fw-bold mb-0">Vendor Dashboard</h3>
+
+    <button class="btn btn-primary" (click)="addProduct()">
+      + Add Product
+    </button>
+  </div>
+
+  <!-- PRODUCT LIST -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let p of products">
+        <td><img [src]="p.image" width="50" /></td>
+        <td>{{ p.title }}</td>
+        <td>₹{{ p.price }}</td>
+        <td>{{ p.quantity }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="delete(p)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

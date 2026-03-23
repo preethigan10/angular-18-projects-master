@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Cart, Product } from '../model/interface';
 import { BehaviorSubject } from 'rxjs';
 
@@ -9,6 +9,7 @@ export class CartService {
   constructor() {}
   private readonly itemsSubject = new BehaviorSubject<Product[]>([]);
   readonly items$ = this.itemsSubject.asObservable();
+  cartItemsNumber = signal(0);
 
   addItem(prod: Product) {
     const values = this.itemsSubject.getValue();
@@ -46,4 +47,10 @@ export class CartService {
   getCartItems() {
     return this.itemsSubject;
   }
+
+  setCartItemsNo(no: number){
+    this.cartItemsNumber.set(no);
+  }
+
+
 }

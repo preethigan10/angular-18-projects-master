@@ -1,0 +1,91 @@
+/* BACKDROP */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* MODAL BOX */
+.login-modal {
+  position: relative;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 360px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+/* INPUT GROUP */
+.input-group-text {
+  background: #f1f1f1;
+  border: none;
+}
+
+.form-control {
+  border: none;
+  box-shadow: none;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border: 1px solid #0d6efd;
+}
+
+/* BUTTON */
+.btn-primary {
+  background: #0d6efd;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #0b5ed7;
+}
+
+/* LINK TEXT */
+.text-primary {
+  cursor: pointer;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-control {
+  border: 1px solid #ccc;
+  box-shadow: none;
+}
+
+.form-control:focus {
+  border: 1px solid #0d6efd;
+  box-shadow: none;
+}
