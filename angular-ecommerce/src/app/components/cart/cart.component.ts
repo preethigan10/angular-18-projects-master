@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ProductSelected } from '../../model/interface';
+import { Product } from '../../model/interface';
 import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
 
@@ -10,43 +10,40 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.css'
+  styleUrl: './cart.component.css',
 })
 export class CartComponent {
-
-  cartItems: ProductSelected[] = [];
+  cartItems: Product[] = [];
   cartService = inject(CartService);
   totalPrice: number = 0;
-    router = inject(Router);
+  router = inject(Router);
 
   ngOnInit() {
-
     this.cartService.getCartItems().subscribe((res: any) => {
       this.cartItems = res;
-      console.log(this.cartItems);
     });
     // this.calculateTotal();
   }
 
-  increaseQty(item: any) {
+  increaseQty(item: Product) {
     if (item.cartQty < item.quantity) {
       item.cartQty++;
-      // this.updateCart();
+      this.cartService.updateItem(item);
+    } else if (item.cartQty === item.quantity) {
+      alert('Stock limit reached');
     }
   }
 
   decreaseQty(item: any) {
     item.cartQty--;
-
+    this.cartService.updateItem(item);
   }
 
   removeItem(item: any) {
-
+    this.cartService.removeItem(item.id);
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/']);
   }
-
-
 }

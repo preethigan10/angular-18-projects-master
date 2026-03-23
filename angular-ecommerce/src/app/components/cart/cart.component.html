@@ -1,5 +1,5 @@
 <div class="container mt-4">
-    <div class="back-link mb-3" (click)="goBack()">
+  <div class="back-link mb-3" (click)="goBack()">
     <i class="bi bi-arrow-left"></i>
     Back to Products
   </div>
@@ -29,17 +29,17 @@
           </div>
 
           <!-- Qty -->
-          <div class="qty-box me-3">
-            <button (click)="decreaseQty(item)">-</button>
+          <div class="qty-box m-3">
+            <button (click)="decreaseQty(item)" [disabled]="item.cartQty == 1">-</button>
 
-            <span>{{ item.quantity }}</span>
+            <span>{{ item.cartQty }}</span>
 
-            <button (click)="increaseQty(item)">+</button>
+            <button (click)="increaseQty(item)" [disabled]="item.cartQty === item.quantity">+</button>
           </div>
 
           <!-- Remove -->
-          <button class="btn btn-sm text-danger" (click)="removeItem(item)">
-            ✕
+          <button class="delete-btn" (click)="removeItem(item)">
+            <i class="bi bi-trash"></i>
           </button>
         </div>
       </div>

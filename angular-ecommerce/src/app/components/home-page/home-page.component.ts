@@ -2,14 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProductsService } from '../../services/products.service';
-import { Product, ProductSelected } from '../../model/interface';
+import { Product } from '../../model/interface';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { AlertService } from '../../services/alert.service';
+import { AlertComponent } from "../../shared/alert/alert.component";
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, AlertComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
@@ -21,6 +23,7 @@ export class HomePageComponent implements OnInit {
   selectedCategory: string = 'all';
   router = inject(Router);
   cartService = inject(CartService);
+  alertService = inject(AlertService);
 
   constructor() {
     this.productService.getProducts().subscribe((res: any) => {
@@ -48,15 +51,18 @@ export class HomePageComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-     const prodSelected = new ProductSelected();
-      prodSelected.id = product.id;
-      prodSelected.title = product.title;
-      prodSelected.price = product.price;
-      prodSelected.category = product.category;
-      prodSelected.image = product.image;
-      prodSelected.quantity = 1;
-      this.cartService.addItem(prodSelected);
+    const prodSelected = new Product();
+    prodSelected.id = product.id;
+    prodSelected.title = product.title;
+    prodSelected.price = product.price;
+    prodSelected.category = product.category;
+    prodSelected.description = product.description;
+    prodSelected.image = product.image;
+    prodSelected.inStock = product.inStock;
+    prodSelected.rating = product.rating;
+    prodSelected.quantity = product.quantity;
+    prodSelected.cartQty = 1;
+    this.cartService.addItem(prodSelected);
+    this.alertService.show('success', 'Product Added To Cart');    
   }
-
-
 }

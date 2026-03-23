@@ -1,15 +1,17 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product, ProductSelected } from '../../model/interface';
+import { Product } from '../../model/interface';
 import { ProductsService } from '../../services/products.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
+import { AlertService } from '../../services/alert.service';
+import { AlertComponent } from "../../shared/alert/alert.component";
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, AlertComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })
@@ -17,17 +19,18 @@ export class ProductDetailsComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   productService = inject(ProductsService);
   cartService = inject(CartService);
-  productId = signal(0);
+  productId: number = 0;;
   product = new Product();
   quantity: number = 1;
   router = inject(Router);
+  alertService = inject(AlertService);
 
   constructor() {
     this.activatedRoute.params.subscribe((res: any) => {
-      this.productId.set(res.id);
+      this.productId = res.id;
       this.productService.getProducts().subscribe((res: any) => {
       const products = res;
-      const prod = products.find((item: any) => item.id === this.productId());
+      const prod = products.find((item: any) => item.id === this.productId);
       this.product = prod;
     });
     });
@@ -51,14 +54,19 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   addToCart(){
-    const prodSelected = new ProductSelected();
+    const prodSelected = new Product();
     prodSelected.id = this.product.id;
     prodSelected.title = this.product.title;
     prodSelected.price = this.product.price;
     prodSelected.category = this.product.category;
+    prodSelected.description = this.product.description;
     prodSelected.image = this.product.image;
-    prodSelected.quantity = this.quantity;
+    prodSelected.inStock = this.product.inStock;
+    prodSelected.rating = this.product.rating;
+    prodSelected.quantity = this.product.quantity;
+    prodSelected.cartQty = this.quantity;
     this.cartService.addItem(prodSelected);
+    this.alertService.show('success', 'Product Added To Cart');
     // console.log(this.cartService.getCartItems());
   }
 }

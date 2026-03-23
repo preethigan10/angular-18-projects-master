@@ -12,6 +12,7 @@ export const routes: Routes = [
     {
         path: 'home',
         component: HomePageComponent
+        // loadComponent: () => import('./homepage.component').then(m => m.HomePageComponent)
     },
     {
         path: 'product/:id',

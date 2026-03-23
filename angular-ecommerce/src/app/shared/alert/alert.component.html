@@ -1,0 +1,9 @@
+@if (alertService.alert(); as alert) {
+  <div class="toast-msg" [ngClass]="alert.type" [ngSwitch]="alert.type">
+    <!-- ICON -->
+    <i *ngSwitchCase="'success'" class="bi bi-check-circle-fill"></i>
+    <i *ngSwitchCase="'danger'" class="bi bi-x-circle-fill"></i>
+    <i *ngSwitchCase="'info'" class="bi bi-exclamation-triangle-fill"></i>
+    {{ alert.message }}
+  </div>
+}

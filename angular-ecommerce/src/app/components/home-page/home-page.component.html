@@ -1,3 +1,4 @@
+<app-alert></app-alert>
 <div class="container mt-4">
   <div class="row">
     <!-- LEFT : CATEGORY CARD -->
@@ -68,7 +69,7 @@
               </span>
               <!-- Add to Cart / Quantity -->              
                 <button
-                  class="btn btn-primary btn-sm"
+                  class="btn btn-primary btn-sm" [disabled]="!product.inStock"
                   (click)="addToCart(product)"
                 >
                   Add to Cart

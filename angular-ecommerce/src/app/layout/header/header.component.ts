@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
       this.products = res;
     });
     this.cartService.getCartItems().subscribe((res: any)=>{
-      const allQuantity = res.map((item: any) => item.quantity);
+      const allQuantity = res.map((item: any) => item.cartQty);
       const sum = allQuantity.reduce((acc: any, val: any) => acc + val, 0);
       if(sum){
         this.cartItemsNumber = sum;

@@ -55,13 +55,6 @@
   border-radius: 8px;
 }
 
-.container {
-  background: #fff;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-}
-
 .rating {
   display: flex;
   align-items: center;

@@ -1,40 +1,49 @@
 import { Injectable } from '@angular/core';
-import { Cart, Product, ProductSelected } from '../model/interface';
+import { Cart, Product } from '../model/interface';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartService {
+  constructor() {}
+  private readonly itemsSubject = new BehaviorSubject<Product[]>([]);
+  readonly items$ = this.itemsSubject.asObservable();
 
-  constructor() { }
-   private readonly itemsSubject  = new BehaviorSubject<ProductSelected[]>([]);
-   readonly items$ = this.itemsSubject.asObservable();
-
-  addItem(prod: ProductSelected) {
-    const values = this.itemsSubject.getValue();    
-    const existingProduct = values.find(product => product.id === prod.id);
+  addItem(prod: Product) {
+    const values = this.itemsSubject.getValue();
+    const existingProduct = values.find((product) => product.id === prod.id);
     if (existingProduct) {
-       // updating existing product
-        existingProduct.quantity+= prod.quantity;
-        console.log(existingProduct);
-        if (!existingProduct.quantity){
-          this.removeItem(existingProduct.id);
-        } else {
-          this.itemsSubject.next(values);
-        }
+      // updating existing product
+      existingProduct.cartQty += prod.cartQty;
+      // console.log(existingProduct);
+      if (!existingProduct.cartQty) {
+        this.removeItem(existingProduct.id);
+      } else {
+        this.itemsSubject.next(values);
+      }
     } else {
-        this.itemsSubject.next([...values, prod]);
+      this.itemsSubject.next([...values, prod]);
+    }
+  }
+
+  updateItem(prod: Product) {
+    const values = this.itemsSubject.getValue();
+    const existingProduct = values.find((product) => product.id === prod.id);
+    if (existingProduct) {
+      existingProduct.cartQty = prod.cartQty;
+      this.itemsSubject.next(values);
     }
   }
 
   removeItem(id: number) {
-    const updatedItems = this.itemsSubject.getValue().filter(item => item.id !== id);
+    const updatedItems = this.itemsSubject
+      .getValue()
+      .filter((item) => item.id !== id);
     this.itemsSubject.next(updatedItems);
   }
 
   getCartItems() {
     return this.itemsSubject;
   }
-
 }
