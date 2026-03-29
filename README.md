@@ -15,4 +15,4 @@ displays number of seats aviable and already booked and by entering contact deti
 
 
 2. ECommerce Application:
-   using Prox server
+  using Mock API Server with Mock api file which runes on 3000.
