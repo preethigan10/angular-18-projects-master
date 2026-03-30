@@ -28,12 +28,16 @@ export class AuthService {
           (item: User) => item.email == user.email,
         )[0];
         this.currentUserSubject.next(currentUser);
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        this.userSignal.set(currentUser || null);
+        if (typeof window !== 'undefined' && window.localStorage) {
+          localStorage.setItem('currentUser', JSON.stringify(currentUser));
+          this.userSignal.set(currentUser || null);
+        }
         if (currentUser.role == 'vendor') {
           this.isAuthenticated = true;
           this.route.navigateByUrl('/vendor-dashboard');
-        } else { this.isAuthenticated = false;}
+        } else {
+          this.isAuthenticated = false;
+        }
       },
       error: (err: any) => {
         if (err.status === 401) {

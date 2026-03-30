@@ -1,88 +1,164 @@
+<app-alert></app-alert>
 <!-- BACKDROP -->
 <div class="overlay" *ngIf="isVisible">
-
   <!-- POPUP -->
   <div class="login-modal">
-
-    <!-- CLOSE -->
+    <!-- Close -->
     <span class="close-btn" (click)="close()">
       <i class="bi bi-x-lg"></i>
     </span>
 
     <h4 class="fw-bold mb-1">Sign Up</h4>
-    <p class="text-muted mb-3">
-      Join us and start shopping today
-    </p>
+    <p class="text-muted mb-3">Join us and start shopping today</p>
 
-    <!-- NAME -->
-    <div class="input-group mb-3">
-      <span class="input-group-text">
-        <i class="bi bi-person-fill"></i>
-      </span>
-      <input 
-        type="text" 
-        class="form-control" 
-        placeholder="Enter name"
-        [(ngModel)]="user.name"
-      />
-    </div>
+    <form [formGroup]="signupForm" (ngSubmit)="createAccount()">
+      <!-- Name -->
+      <div class="input-group mb-1">
+        <span class="input-group-text">
+          <i class="bi bi-person-fill"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter name"
+          formControlName="name"
+          [ngClass]="{
+            'input-error': f['name'].touched && f['name'].invalid,
+            'input-success': f['name'].touched && f['name'].valid,
+          }"
+        />
+      </div>
+      <small class="error-message">
+        @if (f["name"].touched && f["name"].invalid) {
+          Name is required
+        }
+      </small>
 
-    <!-- EMAIL -->
-    <div class="input-group mb-3">
-      <span class="input-group-text">
-        <i class="bi bi-envelope-fill"></i>
-      </span>
-      <input 
-        type="email" 
-        class="form-control" 
-        placeholder="Enter email"
-        [(ngModel)]="user.email"
-      />
-    </div>
+      <!-- Email -->
+      <div class="input-group mb-1">
+        <span class="input-group-text">
+          <i class="bi bi-envelope-fill"></i>
+        </span>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Enter email"
+          formControlName="email"
+          [ngClass]="{
+            'input-error': f['email'].touched && f['email'].invalid,
+            'input-success': f['email'].touched && f['email'].valid,
+          }"
+        />
+      </div>
+      <small class="error-message">
+        @if (f["email"].touched && f["email"].invalid) {
+          Email Id is required and must be in a valid format
+        }
+      </small>
 
-    <!-- PASSWORD -->
-    <div class="input-group mb-3">
-      <span class="input-group-text">
-        <i class="bi bi-lock-fill"></i>
-      </span>
-      <input 
-        [type]="showPassword ? 'text' : 'password'" 
-        class="form-control" 
-        placeholder="Enter password"
-        [(ngModel)]="user.password"
-      />
-      <span class="input-group-text" (click)="togglePassword()" style="cursor:pointer">
-        <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
-      </span>
-    </div>
+      <!-- Password -->
+      <div class="input-group mb-1">
+        <span class="input-group-text">
+          <i class="bi bi-lock-fill"></i>
+        </span>
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          class="form-control"
+          placeholder="Enter password"
+          formControlName="password"
+          [ngClass]="{
+            'input-error': f['password'].touched && f['password'].invalid,
+            'input-success': f['password'].touched && f['password'].valid,
+          }"
+        />
+        <span
+          class="input-group-text"
+          (click)="togglePassword()"
+          style="cursor: pointer"
+        >
+          <i
+            class="bi"
+            [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
+          ></i>
+        </span>
+      </div>
+      <small class="error-message">
+        @if (f["password"].touched && f["password"].invalid) {
+          Password is required and must be at least 6 characters.
+        }
+      </small>
 
-    <!-- CONFIRM PASSWORD -->
-    <div class="input-group mb-3">
-      <span class="input-group-text">
-        <i class="bi bi-lock-fill"></i>
-      </span>
-      <input 
-        [type]="showConfirmPassword ? 'text' : 'password'" 
-        class="form-control" 
-        placeholder="Confirm password"
-      />
-      <span class="input-group-text" (click)="toggleConfirmPassword()" style="cursor:pointer">
-        <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
-      </span>
-    </div>
+      <!-- Confirm Password -->
+      <div class="input-group mb-1">
+        <span class="input-group-text">
+          <i class="bi bi-lock-fill"></i>
+        </span>
+        <input
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          class="form-control"
+          placeholder="Confirm password"
+          formControlName="confirmPassword"
+          [ngClass]="{
+            'input-error':
+              (f['confirmPassword'].touched &&
+                f['confirmPassword'].value.length < 6) ||
+              signupForm.hasError('passwordMismatch'),
+            'input-success':
+              f['confirmPassword'].touched &&
+              f['confirmPassword'].valid &&
+              !signupForm.hasError('passwordMismatch') && f['confirmPassword'].value.length >= 6,
+          }"
+        />
+        <span
+          class="input-group-text"
+          (click)="toggleConfirmPassword()"
+          style="cursor: pointer"
+        >
+          <i
+            class="bi"
+            [ngClass]="
+              showConfirmPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'
+            "
+          ></i>
+        </span>
+      </div>
+      <small class="error-message">
+        @if (f["confirmPassword"].touched &&
+            f["confirmPassword"].value.length < 6)
+         {
+          Confirm Password is required and must be at least 6 characters.
+        }
+        @if (
+          signupForm.hasError("passwordMismatch") &&
+          f["confirmPassword"].touched
+        ) {
+          Passwords must match
+        }
+      </small>
 
-    <!-- BUTTON -->
-    <button class="btn btn-primary w-100 py-2 mb-3" (click)="createAccount(user)">
-      Create Account
-    </button>
+      <!-- Button -->
+      <button
+        class="btn btn-primary w-100 py-2 mb-3"
+        type="submit"
+        [disabled]="
+          signupForm.invalid ||
+          !f['confirmPassword'].value ||
+          signupForm.hasError('passwordMismatch')
+        "
+      >
+        Create Account
+      </button>
+    </form>
 
-    <!-- SIGN IN -->
     <p class="text-center mb-0">
       Already have an account?
-      <span class="text-primary fw-semibold" style="cursor:pointer" (click)="goToLogin()">
+      <span
+        class="text-primary fw-semibold"
+        style="cursor: pointer"
+        (click)="goToLogin()"
+      >
         Sign In
       </span>
     </p>
-
   </div>
 </div>

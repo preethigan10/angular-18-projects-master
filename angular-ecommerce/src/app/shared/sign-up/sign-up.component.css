@@ -18,7 +18,7 @@
   background: #fff;
   padding: 25px;
   border-radius: 12px;
-  width: 360px;
+  width: 450px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.2);
   animation: fadeIn 0.3s ease;
 }
@@ -88,4 +88,23 @@
 .form-control:focus {
   border: 1px solid #0d6efd;
   box-shadow: none;
+}
+
+.error-message{
+  color:#dc3545;
+  font-size:12px;
+  margin-top:4px;
+  margin-bottom:4px;
+  display:block;
+  min-height: 36px;
+}
+
+/* ❌ Error state */
+.input-error{
+  border:1px solid #dc3545 !important;
+}
+
+/* ✅ Success state */
+.input-success{
+  border:1px solid #28a745 !important;
 }

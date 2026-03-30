@@ -23,10 +23,18 @@
       "vendorName": "ABC Fashion"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "JJ",
       "email": "jj",
       "password": "1111",
+      "role": "customer",
+      "vendorName": ""
+    },
+    {
+      "id": 5,
+      "name": "ss",
+      "email": "ss@gmail.com",
+      "password": "ssssss",
       "role": "customer",
       "vendorName": ""
     }

@@ -41,7 +41,6 @@ export class SearchComponent implements OnInit{
 
   searchBus(){
     this.router.navigate(['/search-result', this.searchObj.fromLocationId, this.searchObj.toLocationId, this.searchObj.date]);
-    // localStorage.setItem("searchData", JSON.stringify(this.searchObj));
   }
 
   

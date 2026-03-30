@@ -13,7 +13,9 @@ import { FooterComponent } from './layout/footer/footer.component';
 export class AppComponent implements OnInit{
   title = 'angular-ecommerce';
   ngOnInit(): void {
-    localStorage.removeItem('currentUser');
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.removeItem('currentUser');
+    }
   }
 
 }
