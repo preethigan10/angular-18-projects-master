@@ -119,3 +119,23 @@ text-decoration:underline;
 .back-link i{
 font-size:18px;
 }
+
+
+.error-message{
+  color:#dc3545;
+  font-size:12px;
+  margin-top:4px;
+  margin-bottom:4px;
+  display:block;
+  min-height: 36px;
+}
+
+/* ❌ Error state */
+.input-error{
+  border:1px solid #dc3545 !important;
+}
+
+/* ✅ Success state */
+.input-success{
+  border:1px solid #28a745 !important;
+}

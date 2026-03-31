@@ -1,0 +1,133 @@
+<div class="container mt-4">
+  <div class="back-link mb-3" (click)="goBack()">
+    <i class="bi bi-arrow-left"></i>
+    Back to Cart
+  </div>
+
+  <h4 class="mb-4 fw-bold"><i class="bi bi-truck me-2"></i>Shipping Address</h4>
+
+  <div class="row">
+    <!-- LEFT SIDE -->
+    <!-- SHIPPING -->
+
+    <div class="checkout-box col-lg-8">
+      <form [formGroup]="shippingForm" (ngSubmit)="addUserDetails()">
+        <div class="row">
+          <div class="col-md-6">
+            <input
+              type="text"
+              placeholder="First Name"
+              formControlName="firstName"
+              [ngClass]="{
+                'input-error': f.firstName.touched && f.firstName.invalid,
+                'input-success': f.firstName.touched && f.firstName.valid,
+              }"
+            />
+            <small class="error-message">
+              <span
+                *ngIf="f.firstName.touched && f.firstName.errors?.['required']"
+              >
+                First Name is required
+              </span>
+            </small>
+          </div>
+          <div class="col-md-6">
+            <input
+              type="text"
+              placeholder="Last Name"
+              formControlName="lastName"
+              [ngClass]="{
+                'input-error': f.lastName.touched && f.lastName.invalid,
+                'input-success': f.lastName.touched && f.lastName.valid,
+              }"
+            />
+            <small class="error-message">
+              <span
+                *ngIf="f.lastName.touched && f.lastName.errors?.['required']"
+              >
+                Last Name is required
+              </span>
+            </small>
+          </div>
+        </div>
+
+        <input
+          type="text"
+          placeholder="Address"
+          formControlName="address"
+          [ngClass]="{
+            'input-error': f.address.touched && f.address.invalid,
+            'input-success': f.address.touched && f.address.valid,
+          }"
+        />
+        <small class="error-message">
+          <span *ngIf="f.address.touched && f.address.errors?.['required']">
+            Address is required
+          </span>
+        </small>
+        <input
+          type="text"
+          placeholder="City"
+          formControlName="city"
+          [ngClass]="{
+            'input-error': f.city.touched && f.city.invalid,
+            'input-success': f.city.touched && f.city.valid,
+          }"
+        />
+        <small class="error-message">
+          <span *ngIf="f.city.touched && f.city.errors?.['required']">
+            City is required
+          </span>
+        </small>
+        <div class="row">
+          <div class="col-md-6">
+            <input
+              type="text"
+              placeholder="Country"
+              formControlName="country"
+              [ngClass]="{
+                'input-error': f.country.touched && f.country.invalid,
+                'input-success': f.country.touched && f.country.valid,
+              }"
+            />
+            <small class="error-message">
+              <span *ngIf="f.country.touched && f.country.errors?.['required']">
+                Country is required
+              </span>
+            </small>
+          </div>
+          <div class="col-md-6">
+            <input
+              type="text"
+              placeholder="Zip Code"
+              formControlName="zipCode"
+              [ngClass]="{
+                'input-error': f.zipCode.touched && f.zipCode.invalid,
+                'input-success': f.zipCode.touched && f.zipCode.valid,
+              }"
+            />
+            <small class="error-message">
+              <span *ngIf="f.zipCode.touched && f.zipCode.errors?.['required']">
+                Zip Code is required
+              </span>
+              <span *ngIf="f.zipCode.errors?.['pattern']">
+                Enter valid 6-digit zip code
+              </span>
+            </small>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- RIGHT SIDE (same like cart) -->
+    <div class="col-lg-4">
+      <app-order-summary
+        [totalItems]="totalItems"
+        [totalPrice]="totalPrice"
+        [buttonDisabled]="shippingForm.invalid || !shippingForm.touched"
+        (onClick)="placeOrder()"
+        buttonText="Place Order"
+      ></app-order-summary>
+    </div>
+  </div>
+</div>

@@ -7,11 +7,13 @@ import { Router } from '@angular/router';
 import { SignInComponent } from '../../shared/sign-in/sign-in.component';
 import { AlertService } from '../../services/alert.service';
 import { AlertComponent } from "../../shared/alert/alert.component";
+import { AuthService } from '../../services/auth.service';
+import { OrderSummaryComponent } from "../../shared/order-summary/order-summary.component";
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [FormsModule, CommonModule, SignInComponent, AlertComponent],
+  imports: [FormsModule, CommonModule, SignInComponent, AlertComponent, OrderSummaryComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
@@ -21,17 +23,14 @@ export class CartComponent {
   totalPrice: number = 0;
   router = inject(Router);
   isVisible = false;
-  openPopup(): void {
-    this.isVisible = true;
-  }
-  closePopup(): void {
-    this.isVisible = false;
-  }
+  totalItems: number = 0;
   alertService = inject(AlertService);
 
   ngOnInit() {
     this.cartService.getCartItems().subscribe((res: any) => {
       this.cartItems = res;
+      this.totalItems = this.cartItems.reduce((sum, i) => sum + i.cartQty, 0);
+      
       this.totalPrice = this.cartItems.reduce((total, item) => {
         return total + item.price * item.cartQty;
       }, 0);
@@ -60,7 +59,4 @@ export class CartComponent {
     this.router.navigate(['/']);
   }
 
-  goTocheckOut() {
-    this.openPopup();
-  }
 }

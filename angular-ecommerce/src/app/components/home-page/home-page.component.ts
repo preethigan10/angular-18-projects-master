@@ -53,6 +53,7 @@ export class HomePageComponent implements OnInit {
   addToCart(product: Product) {
     const prodSelected = new Product();
     prodSelected.id = product.id;
+    prodSelected.vendorId = product.vendorId;
     prodSelected.title = product.title;
     prodSelected.price = product.price;
     prodSelected.category = product.category;

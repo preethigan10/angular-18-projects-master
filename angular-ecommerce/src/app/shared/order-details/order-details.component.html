@@ -1,0 +1,22 @@
+<div *ngIf="selectedOrder" class="modal-overlay">
+  <div class="modal-box">
+
+    <h5>Order Details</h5>
+
+    <p><b>Customer:</b> {{selectedOrder.customer}}</p>
+    <p><b>Address:</b> {{selectedOrder.address}}</p>
+
+    <!-- <span [ngClass]="{
+  'badge-pending': order.status === 'Pending',
+  'badge-shipped': order.status === 'Shipped',
+  'badge-delivered': order.status === 'Delivered'
+}">
+  {{order.status}}
+</span> -->
+
+    <div *ngFor="let item of selectedOrder.items">
+      {{item.name}} - ₹{{item.price}}
+    </div>
+
+  </div>
+</div>

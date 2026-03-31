@@ -5,6 +5,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { SignInComponent } from './shared/sign-in/sign-in.component';
 import { VendorDashboardComponent } from './components/vendor-dashboard/vendor-dashboard.component';
 import { vendorAuthGuard } from './guards/vendor-auth.guard';
+import { CheckOutComponent } from './components/check-out/check-out.component';
 
 export const routes: Routes = [
     {
@@ -29,5 +30,9 @@ export const routes: Routes = [
         path: 'vendor-dashboard',
         component: VendorDashboardComponent,
         canActivate: [vendorAuthGuard] 
+    },
+    {
+        path: 'checkout',
+        component: CheckOutComponent
     }
 ];

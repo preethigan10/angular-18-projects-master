@@ -56,6 +56,7 @@ export class ProductDetailsComponent implements OnInit {
   addToCart(){
     const prodSelected = new Product();
     prodSelected.id = this.product.id;
+    prodSelected.vendorId = this.product.vendorId;
     prodSelected.title = this.product.title;
     prodSelected.price = this.product.price;
     prodSelected.category = this.product.category;

@@ -1,6 +1,7 @@
 export class Product {
 
     "id": number;
+    "vendorId": number;
     "title": string;
     "price": number;
     "category": string;
@@ -53,4 +54,39 @@ export interface User {
     password: any;
     role: 'vendor' | 'customer';
     vendorName: string;
+}
+
+
+export class Order {
+    "id": number;
+    "customerId": number;
+    "address": string;
+    "items": Items[];
+    "total": number;
+    "status": 'Pending' | 'Shipped' | 'Delivered';                    
+
+    constructor() {
+        this.id = 0;
+        this.customerId = 0;
+        this.address = '';
+        this.items = [];
+        this.total = 0;
+        this.status = 'Pending';
+    }
+}
+
+export class Items {
+    "productId": number;
+    "vendorId": number;
+    "name": string;
+    "price": number;
+    "qty": number;
+
+    constructor() {
+        this.productId = 0;
+        this.vendorId = 0;
+        this.name = '';
+        this.price = 0;
+        this.qty = 0;
+    }
 }

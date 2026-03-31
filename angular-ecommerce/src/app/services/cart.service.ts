@@ -52,5 +52,9 @@ export class CartService {
     this.cartItemsNumber.set(no);
   }
 
+  clearCart() {
+    this.itemsSubject.next([]);
+  }
+
 
 }

@@ -1,0 +1,9 @@
+.badge-pending{ background:#fff3cd; color:#856404; }
+.badge-shipped{ background:#cce5ff; color:#004085; }
+.badge-delivered{ background:#d4edda; color:#155724; }
+
+span{
+  padding:4px 10px;
+  border-radius:12px;
+  font-size:12px;
+}

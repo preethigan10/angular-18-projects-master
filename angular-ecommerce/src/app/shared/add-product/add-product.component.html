@@ -1,0 +1,32 @@
+
+
+<div class="modal-overlay" *ngIf="showAddProduct">
+
+  <div class="modal-box">
+
+    <h4>Add Product</h4>
+
+    <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+
+      <input type="text" placeholder="Name" formControlName="name">
+
+      <input type="number" placeholder="Price" formControlName="price">
+
+      <input type="number" placeholder="Stock" formControlName="stock">
+
+      <input type="text" placeholder="Category" formControlName="category">
+
+      <input type="file" (change)="onImageUpload($event)">
+
+      <label>
+        Available
+        <input type="checkbox" formControlName="available">
+      </label>
+
+      <button type="submit">Save</button>
+
+    </form>
+
+  </div>
+
+</div>
