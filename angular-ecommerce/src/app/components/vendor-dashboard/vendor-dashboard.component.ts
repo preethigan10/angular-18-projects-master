@@ -1,63 +1,121 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProductsService } from '../../services/products.service';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Order, Product } from '../../model/interface';
-import { OrdersService } from '../../services/orders.service';
+import { ActivatedRoute } from '@angular/router';
+import Chart from 'chart.js/auto';
+import { AuthService } from '../../services/auth.service';
+import { VendorService } from '../../services/vendor.service';
+import { AlertService } from '../../services/alert.service';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-vendor-dashboard',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
   templateUrl: './vendor-dashboard.component.html',
-  styleUrl: './vendor-dashboard.component.css',
+  styleUrls: ['./vendor-dashboard.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
-export class VendorDashboardComponent implements OnInit {
-  products: Product[] = [];
-   orders: Order[] = [];
-  showAddProduct = false;
+export class VendorDashboardComponent implements OnInit, AfterViewInit {
+  totalProducts = 0;
   totalSales = 0;
   totalOrders = 0;
-  totalProducts = 0;
-  http = inject(HttpClient);
-  lowStock = 0;
-  productService = inject(ProductsService);
-  orderService = inject(OrdersService);
-  activeTab: string = '';
+  lowStock = signal(0);
+  vendorService = inject(VendorService);
+  activatedRoute = inject(ActivatedRoute);
+  authService = inject(AuthService);
+  salesChart = viewChild<ElementRef<HTMLInputElement>>('salesChart');
+  orderChart = viewChild<ElementRef<HTMLInputElement>>('orderChart');
+  salesChartInstance: any;
+  ordersChartInstance: any;
+  vendorId: number = 0;
+  orders: Order[] = [];
+  products: Product[] = [];
+
+  constructor() {
+    effect(() => {
+      const salesChart = this.salesChart()?.nativeElement;
+      const ordersChart = this.orderChart()?.nativeElement;
+      if (!salesChart || !ordersChart) return;
+      // destroy existing chart to create new
+      if (this.salesChartInstance) this.salesChartInstance.destroy();
+      if (this.ordersChartInstance) this.ordersChartInstance.destroy();
+      queueMicrotask(() => this.loadCharts(salesChart, ordersChart));
+    });
+  }
 
   ngOnInit() {
-
-     this.orderService.getOrders().subscribe((data: any) => {
+    this.vendorId = Number(this.authService.userSignal().id);
+    this.vendorService
+      .getProductsByVendor(this.vendorId)
+      .subscribe((data: any) => {
+        this.products = data;
+        this.totalProducts = data.length;
+        const stock = data.filter((p: Product) => p.inStock === false).length;
+        this.lowStock.set(stock);
+      });
+    this.vendorService.getOrdersByVendor().subscribe((data) => {
       this.totalOrders = data.length;
-
-      this.totalSales = data.reduce((sum: any, o: any) => sum + o.total, 0);
-      console.log(this.totalOrders);
-      console.log(this.totalSales);
+      this.orders = data;
+      this.totalSales = this.orders.reduce((sum, o) => sum + o.total, 0);
     });
+  }
 
-    this.productService.getProducts().subscribe((res: any) => {
-      this.products = res;
+  loadCharts(salesChart: any, ordersChart: any) {
+    this.salesChartInstance = new Chart(salesChart, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+          {
+            label: 'Sales',
+            data: [5000, 8000, 7500, 10000, 12000, 15000],
+            fill: false,
+            tension: 0.3,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+          },
+        },
+      },
     });
-
-    this.lowStock = this.products.filter((p) => p.inStock === false).length;
+    this.ordersChartInstance = new Chart(ordersChart, {
+      type: 'bar',
+      data: {
+        labels: ['Pending', 'Shipped', 'Delivered'],
+        datasets: [
+          {
+            label: 'Orders',
+            data: [10, 7, 25],
+          },
+        ],
+      },
+    });
   }
 
-  openAddProduct() {
-    // open form modal
-    this.showAddProduct = true;
-  }
-  editProduct(p: any) {
-    // open form modal with pre-filled data
-  }
-
-  updateStatus(o: any) {}
-
-  viewOrder(o: any) {
-    // open order details modal
-  }
-
-  deleteProduct(p: any) {
-    this.products = this.products.filter((item) => item !== p);
+  ngAfterViewInit() {
+    // this.loadCharts();
   }
 }

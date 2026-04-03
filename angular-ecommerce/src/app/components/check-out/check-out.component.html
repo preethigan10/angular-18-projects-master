@@ -124,7 +124,7 @@
       <app-order-summary
         [totalItems]="totalItems"
         [totalPrice]="totalPrice"
-        [buttonDisabled]="shippingForm.invalid || !shippingForm.touched"
+        [buttonDisabled]="shippingForm.invalid || !shippingForm.touched || totalItems === 0  || authService.userSignal() == null"
         (onClick)="placeOrder()"
         buttonText="Place Order"
       ></app-order-summary>

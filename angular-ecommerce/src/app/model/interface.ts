@@ -53,13 +53,13 @@ export interface User {
     email: any;
     password: any;
     role: 'vendor' | 'customer';
-    vendorName: string;
 }
 
 
 export class Order {
     "id": number;
     "customerId": number;
+    "customerName": string;
     "address": string;
     "items": Items[];
     "total": number;
@@ -68,6 +68,7 @@ export class Order {
     constructor() {
         this.id = 0;
         this.customerId = 0;
+        this.customerName = '';
         this.address = '';
         this.items = [];
         this.total = 0;

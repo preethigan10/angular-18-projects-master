@@ -1,0 +1,49 @@
+<app-alert></app-alert>
+
+<nav class="vendor-navbar">
+  <!-- LEFT -->
+  <div class="nav-left">
+    <span class="logo">Vendor Panel</span>
+  </div>
+
+  <!-- CENTER -->
+  <ul class="nav-menu">
+    <li (click)="goTo('dashboard')"
+      [routerLink]="'/vendor-dashboard'"
+      [class.active]="active === 'dashboard'"
+    >
+      Dashboard
+    </li>
+    <li (click)="goTo('products')"
+      [routerLink]="'/vendor/products'"
+      [class.active]="active === 'products'"
+    >
+      Products
+    </li>
+    <li (click)="goTo('orders')"
+      [routerLink]="'/vendor/orders'"
+      [class.active]="active === 'orders'"
+    >
+      Orders
+    </li>
+  </ul>
+
+  <!-- RIGHT -->
+  <div class="nav-right" *ngIf="authService.userSignal() as user">
+    <div class="profile" (click)="toggleDropdown()">
+      <div class="avatar">{{ user?.name?.charAt(0) }}</div>
+      <span class="name">{{ user?.name }}</span>
+    </div>
+
+    <div class="dropdown" *ngIf="showDropdown">
+      <p class="user-name">{{ user?.name }}</p>
+      <p class="email">{{ user?.email }}</p>
+
+      <!-- <button (click)="goTo('profile')">Profile</button> -->
+      <div class="logout" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Sign Out</span>
+      </div>
+    </div>
+  </div>
+</nav>

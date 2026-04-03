@@ -1,0 +1,101 @@
+  <!-- Add PRODUCT modal -->
+  <div class="modal-backdrop">
+    <div class="modal-box">
+      <!-- modal header -->
+      <div class="modal-header">
+        <h5 class="mb-2">Add Product</h5>
+        <span class="close-btn" (click)="close.emit()">✖</span>
+      </div>
+
+      <!-- modal body with form -->
+      <div class="modal-body">
+        <form [formGroup]="addProductForm">
+          <label>Product Name</label>
+          <input
+            type="text"
+            placeholder="Name"
+            formControlName="title" name="title"
+            [ngClass]="{
+              'input-error': f['title'].touched && f['title'].invalid,
+              'input-success': f['title'].touched && f['title'].valid,
+            }"
+          />
+          <small class="error-message">
+            @if (f["title"].touched && f["title"].invalid) {
+              Title is required
+            }
+          </small>
+
+          <label>Category</label>
+          <select name="category" formControlName="category" class="form-control">
+            @for (c of categories; track $index) {
+              <option [value]="c">{{ c }}</option>
+            }
+          </select>
+          <label>Price</label>
+          <input type="number" placeholder="Price" 
+          formControlName="price" name="price"
+          [ngClass]="{
+              'input-error': f['price'].touched && f['price'].invalid,
+              'input-success': f['price'].touched && f['price'].valid,
+            }"/>
+          <small class="error-message">
+            @if (f["price"].touched && f["price"].invalid) {
+              Price is required and minimum value is 0
+            }
+          </small>
+
+          <label>Image URL</label>
+          <input type="text" placeholder="Image URL" formControlName="image" name="image" />
+
+          <label>Description</label>
+
+          <input
+            type="text" name="description"
+            placeholder="Description"
+            formControlName="description"
+          />
+          <label>Rating</label>
+
+          <input type="text" placeholder="Rating" 
+          formControlName="rating" name="rating"
+          [ngClass]="{
+              'input-error': f['rating'].touched && f['rating'].invalid,
+              'input-success': f['rating'].touched && f['rating'].valid,
+            }"
+          />
+          <small class="error-message">
+            @if (f["rating"].touched && f["rating"].invalid) {
+              Rating is required and must be between 0 and 5
+            }
+          </small>
+
+          <label>Stock Quantity</label>
+          <input
+            type="number" name="quantity"
+            placeholder="Quantity"
+            formControlName="quantity"
+            [ngClass]="{
+              'input-error': f['quantity'].touched && f['quantity'].invalid,
+              'input-success': f['quantity'].touched && f['quantity'].valid,
+            }"
+          />
+          <small class="error-message">
+            @if (f["quantity"].touched && f["quantity"].invalid) {
+              Quantity is required and must be a positive number
+            }
+          </small>
+        </form>
+      </div>
+
+      <!-- modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="cancel-btn" (click)="close.emit()">
+          Cancel
+        </button>
+        <button type="button" class="save-btn" (click)="addProduct()">
+          Save
+        </button>
+      </div>
+    </div>
+    </div>

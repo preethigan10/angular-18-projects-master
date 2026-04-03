@@ -3,53 +3,89 @@
   <!-- POPUP -->
   <div class="login-modal">
     <!-- CLOSE BUTTON -->
-    <span class="close-btn"  (click)="close()">
+    <span class="close-btn" (click)="close()">
       <i class="bi bi-x-lg"></i>
     </span>
 
-    <h4 class="fw-bold mb-1">Sign In</h4>
+    <h4 class="fw-bold mb-3">Sign In</h4>
     <p class="text-muted mb-3">Sign in to your account to continue shopping</p>
 
-    <!-- EMAIL -->
-    <div class="input-group mb-3">
-      <span class="input-group-text">
-        <i class="bi bi-envelope-fill"></i>
-      </span>
-      <input
-        type="email"
-        class="form-control"
-        placeholder="Enter email"
-        [(ngModel)]="user.email"
-      />
-    </div>
+    <form (ngSubmit)="userSignIn(user)" #signInForm="ngForm">
+      <!-- EMAIL -->
+      <div class="input-group mb-1">
+        <span class="input-group-text">
+          <i class="bi bi-envelope-fill"></i>
+        </span>
+        <input
+          type="email"
+          class="form-control"
+          #email="ngModel"
+          placeholder="Enter email"
+          [(ngModel)]="user.email"
+          required
+          email name="email"
+          [ngClass]="{
+            'input-error': email.touched && email.invalid,
+            'input-success': email.touched && email.valid,
+          }"
+        />
+      </div>
 
-    <!-- PASSWORD -->
-    <div class="input-group mb-3">
-      <span class="input-group-text">
-        <i class="bi bi-lock-fill"></i>
-      </span>
+      <small class="error-message">
+        <span *ngIf="email.touched && email.errors?.['required']"
+          >Email is required.</span
+        >
+        <span *ngIf="email.errors?.['email']">Enter Valid Email</span>
+      </small>
 
-      <input
-        [type]="showPassword ? 'text' : 'password'"
-        class="form-control"
-        placeholder="Enter password"
-        [(ngModel)]="user.password"
-      />
+      <!-- PASSWORD -->
+      <div class="input-group mb-1">
+        <span class="input-group-text">
+          <i class="bi bi-lock-fill"></i>
+        </span>
 
-      <span
-        class="input-group-text"
-        (click)="togglePassword()"
-        style="cursor: pointer"
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          class="form-control"
+          #password="ngModel"
+          placeholder="Enter password"
+          required
+          minlength="6" name="password"
+          [(ngModel)]="user.password"
+          [ngClass]="{
+            'input-error': password.touched && password.invalid,
+            'input-success': password.touched && password.valid,
+          }"
+        />
+
+        <span
+          class="input-group-text"
+          (click)="togglePassword()"
+          style="cursor: pointer"
+        >
+          <i
+            class="bi"
+            [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
+          ></i>
+        </span>
+      </div>
+
+      <small class="error-message">
+        <span *ngIf="password.touched && password.errors?.['required']"
+          >Password is required.</span
+        >
+        <span *ngIf="password.errors?.['minlength']"
+          >Password must be at least 6 characters long.</span
+        >
+      </small>
+      <!-- BUTTON -->
+      <button
+        class="btn btn-primary w-100 py-2 mb-3"
+        [disabled]="signInForm.invalid"
       >
-        <i
-          class="bi"
-          [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
-        ></i>
-      </span>
-    </div>
-
-    <!-- BUTTON -->
-    <button class="btn btn-primary w-100 py-2 mb-3" (click)="userSignIn(user)">Sign In</button>
+        Sign In
+      </button>
+    </form>
 
     <!-- SIGN UP -->
     <p class="text-center mb-0">
@@ -64,3 +100,5 @@
     </p>
   </div>
 </div>
+
+<app-alert></app-alert>

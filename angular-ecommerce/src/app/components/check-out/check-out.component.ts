@@ -14,6 +14,7 @@ import { OrderSummaryComponent } from '../../shared/order-summary/order-summary.
 import { AlertService } from '../../services/alert.service';
 import { OrdersService } from '../../services/orders.service';
 import { AuthService } from '../../services/auth.service';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-check-out',
@@ -33,6 +34,8 @@ export class CheckOutComponent {
   ordersService = inject(OrdersService);
   authService = inject(AuthService);
   orderDetails: Order = new Order();
+  productService = inject(ProductsService);
+  orders: Order[] = [];
 
   shippingForm = this.fb.group({
     firstName: new FormControl('', Validators.required),
@@ -61,6 +64,10 @@ export class CheckOutComponent {
         0,
       );
     });
+
+    this.ordersService.getOrders().subscribe((data) => {
+      this.orders = data;
+    });
   }
 
   goBack() {
@@ -79,9 +86,12 @@ export class CheckOutComponent {
         this.shippingForm.value.country +
         ' - ' +
         this.shippingForm.value.zipCode;
+      const maxId = Math.max(...this.orders.map((o) => o.id || 0));
+      const newId = maxId + 1;
       this.orderDetails = {
-        id: 0,
+        id: newId,
         customerId: this.authService.userSignal().id,
+        customerName: '',
         address: address,
         items: this.cartItems.map((i) => ({
           productId: i.id,
@@ -95,11 +105,20 @@ export class CheckOutComponent {
         status: 'Pending',
       };
       // console.log(this.orderDetails);
+
       this.ordersService.addOrder(this.orderDetails).subscribe(() => {
         this.alertService.show(
           'success',
           'Order placed successfully! Thank you for shopping with us.',
         );
+        // updating stock after order is placed.since order is placed quantity is reduced from stock quantity.
+        this.cartItems.forEach((item) => {
+          this.productService
+            .updateProductStock(item.cartQty, item.id)
+            .subscribe(() => {
+              console.log('Stock updated for product id: ' + item.id);
+            });
+        });
         this.cartService.clearCart();
         this.router.navigate(['/']);
       });

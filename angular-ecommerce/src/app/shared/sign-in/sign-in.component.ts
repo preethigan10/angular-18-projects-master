@@ -3,28 +3,27 @@ import { User } from '../../model/interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { AlertComponent } from '../alert/alert.component';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AlertComponent],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })
 export class SignInComponent {
-  user: User = {
-    id: 0,
-    name: '',
+  user: any = {
     email: '',
-    password: '',
-    role: 'customer',
-    vendorName: ''
+    password: ''
   };
   showPassword = false;
   @Input() isVisible: boolean = true;
   @Output() closePopup = new EventEmitter<void>();
   @Output() openSignUp = new EventEmitter<void>();
   authService = inject(AuthService);
+  alertService = inject(AlertService);
 
   togglePassword() {
     this.showPassword = !this.showPassword;
@@ -41,9 +40,25 @@ export class SignInComponent {
   }
 
   userSignIn(user: User) {
-    this.authService.login(user);
-    this.close();
+    if (!user.email || !user.password) {
+      alert('Please fill in all fields');
+      return;
+    }
+    this.authService.validateUser(user.email, user.password).subscribe({
+      next: (res: any) => {
+        if (res.length === 0) {
+          this.alertService.show('danger', 'User not found');
+        } else if (res[0].password !== user.password) {
+          this.alertService.show('danger', 'Invalid Password');
+        } else {
+          this.authService.login(user);
+          this.alertService.show('success', 'Logged in successfully!');
+          this.close();
+        }
+      },
+      error: (err: any) => {
+        this.alertService.show('danger', 'Server error');
+      },
+    });
   }
-
-  
 }

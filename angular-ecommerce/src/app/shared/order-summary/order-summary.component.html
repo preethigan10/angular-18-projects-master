@@ -35,4 +35,14 @@
   </button>
 </div>
 
-<app-sign-in [isVisible]="isVisible" (closePopup)="closePopup()"></app-sign-in>
+<app-sign-in
+  [isVisible]="signInModal"
+  (closePopup)="signInModal = false"
+  (openSignUp)="signUpModal = true; signInModal = false"
+></app-sign-in>
+
+<app-sign-up
+  [isVisible]="signUpModal"
+  (closePopup)="signUpModal = false"
+  (openSignIn)="signInModal = true; signUpModal = false"
+></app-sign-up>

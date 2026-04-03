@@ -19,31 +19,35 @@
       "name": "ABC Store",
       "email": "vendor@gmail.com",
       "password": "vendor123",
-      "role": "vendor",
-      "vendorName": "ABC Fashion"
+      "role": "vendor"
     },
     {
       "id": "3",
       "name": "JJ",
       "email": "jj",
       "password": "1111",
-      "role": "customer",
-      "vendorName": ""
+      "role": "customer"
     },
     {
       "id": "5",
       "name": "ss",
       "email": "ss@gmail.com",
       "password": "ssssss",
-      "role": "customer",
-      "vendorName": ""
+      "role": "customer"
+    },
+    {
+      "id": 6,
+      "name": "new",
+      "email": "new@fgm",
+      "password": "nnnnnn",
+      "role": "customer"
     }
   ],
   "products": [
     {
       "id": "1",
       "vendorId": 3,
-      "title": "Laptop",
+      "title": "Laptops",
       "category": "Electronics",
       "price": 55000,
       "inStock": true,
@@ -54,13 +58,13 @@
     },
     {
       "id": "2",
-      "vendorId": 1,
+      "vendorId": 3,
       "title": "Wireless Headphones",
       "category": "Electronics",
-      "price": 2500,
+      "price": 2400,
       "inStock": true,
       "rating": 4.1,
-      "quantity": 15,
+      "quantity": 13,
       "description": "Noise cancelling wireless headphones",
       "image": "https://images.unsplash.com/photo-1580894894513-541e068a3e2b?auto=format&fit=crop&w=600&q=80"
     },
@@ -72,7 +76,7 @@
       "price": 1999,
       "inStock": false,
       "rating": 3.5,
-      "quantity": 20,
+      "quantity": 0,
       "description": "Portable speaker with deep bass",
       "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=600&q=80"
     },
@@ -102,7 +106,7 @@
     },
     {
       "id": "6",
-      "vendorId": 1,
+      "vendorId": 3,
       "title": "Men T-Shirt",
       "category": "Clothing",
       "price": 799,
@@ -126,7 +130,7 @@
     },
     {
       "id": "8",
-      "vendorId": 1,
+      "vendorId": 3,
       "title": "Men Jeans",
       "category": "Clothing",
       "price": 1599,
@@ -283,13 +287,13 @@
   ],
   "orders": [
     {
-      "id": 0,
+      "id": "1",
       "customerId": "2",
       "address": "102, new street, near temple, Chennai, India - 600125",
       "items": [
         {
           "productId": "6",
-          "vendorId": 1,
+          "vendorId": 3,
           "name": "Men T-Shirt",
           "price": 799,
           "qty": 1,
@@ -297,7 +301,7 @@
         },
         {
           "productId": "2",
-          "vendorId": 1,
+          "vendorId": 3,
           "name": "Wireless Headphones",
           "price": 2500,
           "qty": 1,
@@ -305,10 +309,10 @@
         }
       ],
       "total": 3299,
-      "status": "Pending"
+      "status": "Shipped"
     },
     {
-      "id": 0,
+      "id": "2",
       "customerId": "2",
       "address": "102, new street, near temple, Chennai, India - 600125",
       "items": [
@@ -322,7 +326,7 @@
         },
         {
           "productId": "8",
-          "vendorId": 1,
+          "vendorId": 3,
           "name": "Men Jeans",
           "price": 1599,
           "qty": 1,
@@ -348,6 +352,12 @@
       "total": 6296,
       "status": "Pending"
     }
+  ],
+  "productCategories": [
+    "Electronics",
+    "Clothing",
+    "Footwear",
+    "Accessories"
   ],
   "$schema": "./node_modules/json-server/schema.json"
 }

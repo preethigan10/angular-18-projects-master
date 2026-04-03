@@ -38,8 +38,7 @@ export class SignUpComponent implements OnDestroy {
     name: '',
     email: '',
     password: '',
-    role: 'customer',
-    vendorName: '',
+    role: 'customer'
   };
   authService = inject(AuthService);
   showPassword = false;

@@ -1,0 +1,82 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: #fff;
+  width: 500px;
+  max-width: 90%;
+  border-radius: 12px;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Header */
+.modal-header {
+  background: #343a40;
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* Body */
+.modal-body {
+  padding: 20px;
+}
+
+.modal-body p {
+  margin: 8px 0;
+}
+
+/* Table */
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.items-table th {
+  background: #f1f1f1;
+  padding: 8px;
+}
+
+.items-table td {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Total */
+.total {
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: right;
+  font-size: 16px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,46 @@
+<!-- ORDERS SECTION -->
+
+<div class="orders-container container">
+  <h3>Orders</h3>
+
+  <table class="orders-table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let o of orders">
+        <td>#{{ o.id }}</td>
+        <td>{{ o.customerName }}</td>
+        <td>₹{{ o.total }}</td>
+        <td>
+          <select
+            class="status-dropdown"
+            [value]="o.status"
+            (change)="updateStatus(o, $event)"
+          >
+            <option value="Pending">Pending</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+          </select>
+        </td>
+        <td>
+          <button class="edit-btn" (click)="viewOrder(o)">View Order</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-vendor-view-order
+  *ngIf="showViewOrderModal"
+  [order]="selectedOrder"
+  (close)="showViewOrderModal = false"
+>
+</app-vendor-view-order>

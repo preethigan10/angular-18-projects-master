@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../core/constants/constants';
 import { AlertService } from './alert.service';
 import { Router } from '@angular/router';
+import { error } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -55,7 +56,7 @@ export class AuthService {
     this.userSignal.set(null);
     this.isAuthenticated = false;
     localStorage.removeItem('currentUser');
-    this.route.navigateByUrl('/');
+    // this.route.navigateByUrl('/');
   }
 
   addNewUser(user: User) {
@@ -65,5 +66,13 @@ export class AuthService {
         console.log('User added:', response);
       });
     });
+  }
+
+  validateUser(email: string, password: string): Observable<User> {
+    return this.http.get<User>(API_URL + `user?email=${email}`);
+  }
+
+  getAllUsers() {
+      return this.http.get<User[]>(API_URL + `user`);
   }
 }

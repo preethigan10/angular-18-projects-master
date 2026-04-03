@@ -41,8 +41,7 @@ export class HeaderComponent implements OnInit {
     name: '',
     email: '',
     password: '',
-    role: 'customer',
-    vendorName: '',
+    role: 'customer'
   };
   showProfile = false;
 

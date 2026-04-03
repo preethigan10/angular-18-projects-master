@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Your Products</h4>
+    <button class="btn btn-primary" (click)="addProduct()">
+      + Add Product
+    </button>
+  </div>
+
+  <!-- PRODUCTS SECTION -->
+  <table class="dashboard-table">
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Actions</th>
+    </tr>
+
+    <tr *ngFor="let p of products">
+      <td><img [src]="p.image" width="50" /></td>
+      <td>{{ p.title }}</td>
+      <td>₹{{ p.price }}</td>
+
+      <td [class.text-danger]="p.inStock === false">
+        {{ p.inStock ? "In Stock" : "Out of Stock" }}
+      </td>
+
+      <td>
+        <button class="action-btn edit-btn" (click)="editProduct(p.id)">
+          ✏️ Edit
+        </button>
+
+        <button class="action-btn delete-btn" (click)="deleteProduct(p.id)">
+          🗑 Delete
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<app-vendor-add-product
+  *ngIf="showAddModal"
+  (close)="showAddModal = false"
+  (productAdded)="updateTable()"
+>
+</app-vendor-add-product>
+
+<app-vendor-edit-product
+  *ngIf="showEditModal"
+  [product]="selectProduct"
+  (close)="showEditModal = false"
+  (productUpdated)="updateProduct($event)"
+>
+</app-vendor-edit-product>

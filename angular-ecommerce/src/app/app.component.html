@@ -1,6 +1,14 @@
 <div class="page-container">
   <div class="header">
-  <app-header></app-header>
+    <app-header
+      *ngIf="
+        authService.userSignal() == null ||
+        authService.userSignal()?.role != 'vendor'
+      "
+    ></app-header>
+    <app-vendor-header
+      *ngIf="authService.userSignal()?.role == 'vendor'"
+    ></app-vendor-header>
   </div>
 
   <div class="content">
