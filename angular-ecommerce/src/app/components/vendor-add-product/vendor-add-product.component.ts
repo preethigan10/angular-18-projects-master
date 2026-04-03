@@ -17,11 +17,12 @@ import { ProductsService } from '../../services/products.service';
 import { Product } from '../../model/interface';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { ClickOutsideDirective } from '../../shared/custom-directives/click-outside.directive';
 
 @Component({
   selector: 'app-vendor-add-product',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ClickOutsideDirective],
   templateUrl: './vendor-add-product.component.html',
   styleUrl: './vendor-add-product.component.css',
 })

@@ -4,11 +4,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ProductsService } from '../../services/products.service';
 import { AlertService } from '../../services/alert.service';
 import { CommonModule } from '@angular/common';
+import { ClickOutsideDirective } from '../../shared/custom-directives/click-outside.directive';
 
 @Component({
   selector: 'app-vendor-edit-product',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ClickOutsideDirective],
   templateUrl: './vendor-edit-product.component.html',
   styleUrl: './vendor-edit-product.component.css',
 })

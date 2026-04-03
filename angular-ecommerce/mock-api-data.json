@@ -47,7 +47,7 @@
     {
       "id": "1",
       "vendorId": 3,
-      "title": "Laptops",
+      "title": "Laptop",
       "category": "Electronics",
       "price": 55000,
       "inStock": true,

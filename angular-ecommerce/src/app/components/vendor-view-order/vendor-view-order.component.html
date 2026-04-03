@@ -1,5 +1,6 @@
 <div class="modal-backdrop">
-  <div class="modal-box">
+  <div class="modal-box" appClickOutside
+       (outside)="close.emit()">
 
     <!-- Header -->
     <div class="modal-header">

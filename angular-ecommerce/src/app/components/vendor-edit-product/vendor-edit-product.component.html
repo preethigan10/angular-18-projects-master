@@ -1,6 +1,7 @@
   <!-- Edit PRODUCT modal -->
   <div class="modal-backdrop">
-    <div class="modal-box">
+    <div class="modal-box" appClickOutside
+       (outside)="close.emit()">
       <!-- modal header -->
       <div class="modal-header">
         <h5 class="mb-2">Edit Product</h5>

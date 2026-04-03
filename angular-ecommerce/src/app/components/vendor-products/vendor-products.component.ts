@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { VendorEditProductComponent } from '../vendor-edit-product/vendor-edit-product.component';
 import { VendorAddProductComponent } from '../vendor-add-product/vendor-add-product.component';
 import { ProductsService } from '../../services/products.service';
+import { LowStockDirective } from '../../shared/custom-directives/low-stock.directive';
 
 @Component({
   selector: 'app-vendor-products',
@@ -15,6 +16,7 @@ import { ProductsService } from '../../services/products.service';
     CommonModule,
     VendorEditProductComponent,
     VendorAddProductComponent,
+    LowStockDirective
   ],
   templateUrl: './vendor-products.component.html',
   styleUrl: './vendor-products.component.css',

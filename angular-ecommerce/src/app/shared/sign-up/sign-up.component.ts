@@ -20,11 +20,12 @@ import { AuthService } from '../../services/auth.service';
 import { passwordMatchValidator } from '../validators/custom-validators';
 import { AlertComponent } from "../alert/alert.component";
 import { AlertService } from '../../services/alert.service';
+import { ClickOutsideDirective } from '../custom-directives/click-outside.directive';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule, AlertComponent],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, AlertComponent, ClickOutsideDirective],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
 })

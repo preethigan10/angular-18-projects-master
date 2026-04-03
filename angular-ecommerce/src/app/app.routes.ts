@@ -10,41 +10,46 @@ import { VendorProductsComponent } from './components/vendor-products/vendor-pro
 import { VendorOrdersComponent } from './components/vendor-orders/vendor-orders.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-    },
-    {
-        path: 'home',
-        component: HomePageComponent
-        // loadComponent: () => import('./homepage.component').then(m => m.HomePageComponent)
-    },
-    {
-        path: 'product/:id',
-        component: ProductDetailsComponent
-    },
-    {
-        path: 'cart',
-        component: CartComponent
-    },
-    {
-        path: 'checkout',
-        component: CheckOutComponent
-    },
-    {
-        path: 'vendor-dashboard',
-        component: VendorDashboardComponent,
-        canActivate: [vendorAuthGuard] 
-    },
-    {
-        path: 'vendor/products',
-        component: VendorProductsComponent,
-        canActivate: [vendorAuthGuard] 
-    },
-    {
-        path: 'vendor/orders',
-        component: VendorOrdersComponent,
-        canActivate: [vendorAuthGuard] 
-    }
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    component: HomePageComponent,
+    // loadComponent: () => import('./homepage.component').then(m => m.HomePageComponent)
+  },
+  {
+    path: 'product/:id',
+    component: ProductDetailsComponent,
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+  },
+  {
+    path: 'checkout',
+    component: CheckOutComponent,
+  },
+  {
+    path: 'vendor',
+    canActivate: [vendorAuthGuard],
+    loadChildren: () => import('./vendor.routes').then((m) => m.VENDOR_ROUTES),
+  },
+  // {
+  //     path: 'vendor-dashboard',
+  //     component: VendorDashboardComponent,
+  //     canActivate: [vendorAuthGuard]
+  // },
+  // {
+  //     path: 'vendor/products',
+  //     component: VendorProductsComponent,
+  //     canActivate: [vendorAuthGuard]
+  // },
+  // {
+  //     path: 'vendor/orders',
+  //     component: VendorOrdersComponent,
+  //     canActivate: [vendorAuthGuard]
+  // }
 ];

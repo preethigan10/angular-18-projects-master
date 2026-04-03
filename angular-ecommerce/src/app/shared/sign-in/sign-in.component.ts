@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { AlertComponent } from '../alert/alert.component';
 import { AlertService } from '../../services/alert.service';
+import { ClickOutsideDirective } from '../custom-directives/click-outside.directive';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [CommonModule, FormsModule, AlertComponent],
+  imports: [CommonModule, FormsModule, AlertComponent, ClickOutsideDirective],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })

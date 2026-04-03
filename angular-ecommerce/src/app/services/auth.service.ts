@@ -35,7 +35,7 @@ export class AuthService {
         }
         if (currentUser.role == 'vendor') {
           this.isAuthenticated = true;
-          this.route.navigateByUrl('/vendor-dashboard');
+          this.route.navigateByUrl('/vendor');
         } else {
           this.isAuthenticated = false;
         }
