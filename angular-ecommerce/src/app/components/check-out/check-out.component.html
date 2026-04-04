@@ -123,7 +123,7 @@
     <div class="col-lg-4">
       <app-order-summary
         [totalItems]="totalItems"
-        [totalPrice]="totalPrice"
+        [totalPrice]="cartItems | totalPricePipe"
         [buttonDisabled]="shippingForm.invalid || !shippingForm.touched || totalItems === 0  || authService.userSignal() == null"
         (onClick)="placeOrder()"
         buttonText="Place Order"

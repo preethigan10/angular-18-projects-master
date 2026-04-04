@@ -47,6 +47,8 @@
     {
       "id": "1",
       "vendorId": 3,
+      "hasDiscount": false,
+      "disountPercentage": 5,
       "title": "Laptop",
       "category": "Electronics",
       "price": 55000,
@@ -59,6 +61,8 @@
     {
       "id": "2",
       "vendorId": 3,
+      "hasDiscount": true,
+      "disountPercentage": 15,
       "title": "Wireless Headphones",
       "category": "Electronics",
       "price": 2400,
@@ -71,6 +75,8 @@
     {
       "id": "3",
       "vendorId": 3,
+      "hasDiscount": true,
+      "disountPercentage": 10,
       "title": "Bluetooth Speaker",
       "category": "Electronics",
       "price": 1999,
@@ -83,6 +89,8 @@
     {
       "id": "4",
       "vendorId": 1,
+      "hasDiscount": true,
+      "disountPercentage": 5,
       "title": "Smart Watch",
       "category": "Electronics",
       "price": 4999,
@@ -95,6 +103,8 @@
     {
       "id": "5",
       "vendorId": 2,
+      "hasDiscount": true,
+      "disountPercentage": 20,
       "title": "Gaming Keyboard",
       "category": "Electronics",
       "price": 2999,
@@ -107,6 +117,8 @@
     {
       "id": "6",
       "vendorId": 3,
+      "hasDiscount": true,
+      "disountPercentage": 2,
       "title": "Men T-Shirt",
       "category": "Clothing",
       "price": 799,
@@ -119,6 +131,8 @@
     {
       "id": "7",
       "vendorId": 2,
+      "hasDiscount": true,
+      "disountPercentage": 8,
       "title": "Women Jacket",
       "category": "Clothing",
       "price": 2499,
@@ -131,6 +145,8 @@
     {
       "id": "8",
       "vendorId": 3,
+      "hasDiscount": false,
+      "disountPercentage": 5,
       "title": "Men Jeans",
       "category": "Clothing",
       "price": 1599,
@@ -143,6 +159,8 @@
     {
       "id": "9",
       "vendorId": 3,
+      "hasDiscount": false,
+      "disountPercentage": 5,
       "title": "Women Dress",
       "category": "Clothing",
       "price": 1999,
@@ -155,6 +173,8 @@
     {
       "id": "10",
       "vendorId": 1,
+      "hasDiscount": true,
+      "disountPercentage": 10,
       "title": "Casual Shirt",
       "category": "Clothing",
       "price": 999,
@@ -167,6 +187,8 @@
     {
       "id": "11",
       "vendorId": 2,
+      "hasDiscount": false,
+      "disountPercentage": 5,
       "title": "Running Shoes",
       "category": "Footwear",
       "price": 2999,
@@ -179,6 +201,8 @@
     {
       "id": "12",
       "vendorId": 1,
+      "hasDiscount": true,
+      "disountPercentage": 10,
       "title": "Casual Sneakers",
       "category": "Footwear",
       "price": 3499,
@@ -191,6 +215,8 @@
     {
       "id": "13",
       "vendorId": 1,
+      "hasDiscount": false,
+      "disountPercentage": 5,
       "title": "Sports Shoes",
       "category": "Footwear",
       "price": 2799,
@@ -203,6 +229,8 @@
     {
       "id": "14",
       "vendorId": 3,
+      "hasDiscount": true,
+      "disountPercentage": 15,
       "title": "Sandals",
       "category": "Footwear",
       "price": 1499,
@@ -215,6 +243,8 @@
     {
       "id": "15",
       "vendorId": 1,
+      "hasDiscount": false,
+      "disountPercentage": 5,
       "title": "Formal Shoes",
       "category": "Footwear",
       "price": 3999,
@@ -227,6 +257,8 @@
     {
       "id": "16",
       "vendorId": 3,
+      "hasDiscount": true,
+      "disountPercentage": 15,
       "title": "Laptop Backpack",
       "category": "Accessories",
       "price": 1299,
@@ -239,6 +271,8 @@
     {
       "id": "17",
       "vendorId": 1,
+      "hasDiscount": false,
+      "disountPercentage": 5,
       "title": "Travel Bag",
       "category": "Accessories",
       "price": 1999,
@@ -251,6 +285,8 @@
     {
       "id": "18",
       "vendorId": 2,
+      "hasDiscount": true,
+      "disountPercentage": 20,
       "title": "Sunglasses",
       "category": "Accessories",
       "price": 899,
@@ -263,6 +299,8 @@
     {
       "id": "19",
       "vendorId": 1,
+      "hasDiscount": false,
+      "disountPercentage": 5,
       "title": "Leather Wallet",
       "category": "Accessories",
       "price": 699,
@@ -275,6 +313,8 @@
     {
       "id": "20",
       "vendorId": 3,
+      "hasDiscount": false,
+      "disountPercentage": 5,
       "title": "Classic Wrist Watch",
       "category": "Accessories",
       "price": 2499,
@@ -309,7 +349,7 @@
         }
       ],
       "total": 3299,
-      "status": "Shipped"
+      "status": "Delivered"
     },
     {
       "id": "2",
@@ -350,7 +390,7 @@
         }
       ],
       "total": 6296,
-      "status": "Pending"
+      "status": "Shipped"
     }
   ],
   "productCategories": [

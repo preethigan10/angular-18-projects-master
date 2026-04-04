@@ -63,19 +63,31 @@ export class VendorDashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.vendorId = Number(this.authService.userSignal().id);
-    this.vendorService
-      .getProductsByVendor(this.vendorId)
-      .subscribe((data: any) => {
-        this.products = data;
-        this.totalProducts = data.length;
-        const stock = data.filter((p: Product) => p.inStock === false).length;
-        this.lowStock.set(stock);
-      });
-    this.vendorService.getOrdersByVendor().subscribe((data) => {
-      this.totalOrders = data.length;
-      this.orders = data;
+    // using forkjoin to call both products and order based on vendorid
+    this.vendorService.getCombinedData(this.vendorId).subscribe((res) => {
+      // products
+      this.products = res.products;
+      this.totalProducts = this.products.length;
+      const stock = this.products.filter((p: Product) => p.inStock === false).length;
+      this.lowStock.set(stock);
+      // orders 
+      this.orders = res.orders;
+      this.totalOrders = this.orders.length;
       this.totalSales = this.orders.reduce((sum, o) => sum + o.total, 0);
     });
+    // this.vendorService
+    //   .getProductsByVendor(this.vendorId)
+    //   .subscribe((data: any) => {
+    //     this.products = data;
+    //     this.totalProducts = data.length;
+    //     const stock = data.filter((p: Product) => p.inStock === false).length;
+    //     this.lowStock.set(stock);
+    //   });
+    // this.vendorService.getOrdersByVendor().subscribe((data) => {
+    //   this.totalOrders = data.length;
+    //   this.orders = data;
+    //   this.totalSales = this.orders.reduce((sum, o) => sum + o.total, 0);
+    // });
   }
 
   loadCharts(salesChart: any, ordersChart: any) {

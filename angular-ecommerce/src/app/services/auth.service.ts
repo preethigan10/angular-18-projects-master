@@ -30,6 +30,8 @@ export class AuthService {
         )[0];
         this.currentUserSubject.next(currentUser);
         if (typeof window !== 'undefined' && window.localStorage) {
+          const fakeToken = btoa(user.email + ':' + Date.now());
+          localStorage.setItem('token', fakeToken);
           localStorage.setItem('currentUser', JSON.stringify(currentUser));
           this.userSignal.set(currentUser || null);
         }
@@ -52,6 +54,7 @@ export class AuthService {
 
   // logout and clear localstorage values
   logout(): void {
+    localStorage.removeItem('token');
     this.currentUserSubject.next(null);
     this.userSignal.set(null);
     this.isAuthenticated = false;

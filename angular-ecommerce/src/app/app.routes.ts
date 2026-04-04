@@ -8,6 +8,7 @@ import { vendorAuthGuard } from './guards/vendor-auth.guard';
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { VendorProductsComponent } from './components/vendor-products/vendor-products.component';
 import { VendorOrdersComponent } from './components/vendor-orders/vendor-orders.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 export const routes: Routes = [
   {
@@ -37,19 +38,12 @@ export const routes: Routes = [
     canActivate: [vendorAuthGuard],
     loadChildren: () => import('./vendor.routes').then((m) => m.VENDOR_ROUTES),
   },
-  // {
-  //     path: 'vendor-dashboard',
-  //     component: VendorDashboardComponent,
-  //     canActivate: [vendorAuthGuard]
-  // },
-  // {
-  //     path: 'vendor/products',
-  //     component: VendorProductsComponent,
-  //     canActivate: [vendorAuthGuard]
-  // },
-  // {
-  //     path: 'vendor/orders',
-  //     component: VendorOrdersComponent,
-  //     canActivate: [vendorAuthGuard]
-  // }
+  {
+    path: '404',
+    component: NotFoundComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '404'
+  }
 ];

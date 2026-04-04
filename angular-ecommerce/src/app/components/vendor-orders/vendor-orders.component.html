@@ -20,10 +20,10 @@
         <td>{{ o.customerName }}</td>
         <td>₹{{ o.total }}</td>
         <td>
-          <select
+          <select [ngClass]="o.status | statusColor"
             class="status-dropdown"
             [value]="o.status"
-            (change)="updateStatus(o, $event)"
+            (change)="updateStatus(o, $event)" 
           >
             <option value="Pending">Pending</option>
             <option value="Shipped">Shipped</option>

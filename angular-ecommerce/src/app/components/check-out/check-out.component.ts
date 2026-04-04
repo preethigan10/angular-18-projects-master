@@ -15,11 +15,17 @@ import { AlertService } from '../../services/alert.service';
 import { OrdersService } from '../../services/orders.service';
 import { AuthService } from '../../services/auth.service';
 import { ProductsService } from '../../services/products.service';
+import { TotalPricePipe } from '../../shared/custom-pipe/total-price.pipe';
 
 @Component({
   selector: 'app-check-out',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, OrderSummaryComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    OrderSummaryComponent,
+    TotalPricePipe
+  ],
   templateUrl: './check-out.component.html',
   styleUrl: './check-out.component.css',
 })

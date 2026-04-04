@@ -66,14 +66,10 @@
     <!-- RIGHT SIDE SUMMARY -->
     <div class="col-lg-4">
       <app-order-summary
-            [totalItems]="totalItems"
-            [totalPrice]="totalPrice"
-            buttonText="Proceed To Checkout"
-        ></app-order-summary> 
+        [totalItems]="totalItems"
+        [totalPrice]="cartItems | totalPricePipe"
+        buttonText="Proceed To Checkout"
+      ></app-order-summary>
     </div>
   </div>
 </div>
-
-
-
-

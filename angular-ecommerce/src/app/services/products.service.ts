@@ -2,18 +2,22 @@ import { inject, Injectable } from '@angular/core';
 import { API_URL } from '../core/constants/constants';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../model/interface';
-import { Observable, switchMap } from 'rxjs';
+import { finalize, Observable, switchMap } from 'rxjs';
+import { LoaderService } from './loader.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
   http = inject(HttpClient);
+  loader = inject(LoaderService);
 
   constructor() {}
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(API_URL + 'products');
+    return this.http
+      .get<Product[]>(API_URL + 'products')
+      .pipe(finalize(() => this.loader.hide()));
   }
 
   getProductsById(productId: number): Observable<Product[]> {

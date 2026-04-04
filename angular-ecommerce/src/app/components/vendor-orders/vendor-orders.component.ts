@@ -6,12 +6,18 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { OrdersService } from '../../services/orders.service';
 import { AlertService } from '../../services/alert.service';
-import { VendorViewOrderComponent } from "../vendor-view-order/vendor-view-order.component";
+import { VendorViewOrderComponent } from '../vendor-view-order/vendor-view-order.component';
+import { StatusColorPipe } from '../../shared/custom-pipe/status-color.pipe';
 
 @Component({
   selector: 'app-vendor-orders',
   standalone: true,
-  imports: [FormsModule, CommonModule, VendorViewOrderComponent],
+  imports: [
+    FormsModule,
+    CommonModule,
+    VendorViewOrderComponent,
+    StatusColorPipe
+],
   templateUrl: './vendor-orders.component.html',
   styleUrl: './vendor-orders.component.css',
 })
@@ -53,7 +59,7 @@ export class VendorOrdersComponent implements OnInit {
             return {
               ...res,
               items: items,
-              total: items.reduce((sum, i) => sum + i.price * i.qty, 0),
+              total: items.reduce((sum, item) => sum + item.price * (item.qty || 1), 0),
               customerName: customerName,
             };
           } else {
@@ -72,7 +78,11 @@ export class VendorOrdersComponent implements OnInit {
   }
 
   updateStatus(order: Order, event: any) {
-    if (confirm(`Are you sure you want to change status of this product to ${event.target.value}?`)) {
+    if (
+      confirm(
+        `Are you sure you want to change status of this product to ${event.target.value}?`,
+      )
+    ) {
       this.orderService
         .updateStatus(order, event.target.value)
         .subscribe(() => {

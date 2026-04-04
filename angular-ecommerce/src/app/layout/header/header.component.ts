@@ -10,6 +10,7 @@ import { SignInComponent } from '../../shared/sign-in/sign-in.component';
 import { SignUpComponent } from '../../shared/sign-up/sign-up.component';
 import { AlertComponent } from '../../shared/alert/alert.component';
 import { AuthService } from '../../services/auth.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -41,14 +42,20 @@ export class HeaderComponent implements OnInit {
     name: '',
     email: '',
     password: '',
-    role: 'customer'
+    role: 'customer',
   };
   showProfile = false;
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((res: any) => {
-      this.products = res;
-    });
+    // debounce 300s means it waits for 300s before doing api call...
+    // this is useful because in search bar instead of calling api for each letter it waits user is completed the search letters
+    // distinct until chaneg api called only if it sees a chnage in search bar
+    this.productService
+      .getProducts()
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((res: any) => {
+        this.products = res;
+      });
     this.cartService.getCartItems().subscribe((res: any) => {
       const allQuantity = res.map((item: any) => item.cartQty);
       const sum = allQuantity.reduce((acc: any, val: any) => acc + val, 0);
@@ -68,8 +75,9 @@ export class HeaderComponent implements OnInit {
 
   selectProduct(product: Product) {
     this.searchQuery = product.title;
-    this.filteredProducts = [];
     this.router.navigate(['/product/' + product.id]);
+    this.searchQuery = '';
+    this.filteredProducts = [];
   }
 
   searchProduct() {}
