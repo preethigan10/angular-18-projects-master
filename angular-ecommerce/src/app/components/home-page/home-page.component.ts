@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProductsService } from '../../services/products.service';
 import { Product } from '../../model/interface';
@@ -25,7 +25,7 @@ export class HomePageComponent implements OnInit {
   cartService = inject(CartService);
   alertService = inject(AlertService);
 
-  constructor() {
+  constructor(private cd: ChangeDetectorRef) {
     this.productService.getProducts().subscribe((res: any) => {
       this.products = res;
       this.filteredProducts = this.products;
@@ -54,6 +54,7 @@ export class HomePageComponent implements OnInit {
     const prodSelected = new Product();
     if (product.quantity == 1) {
       product.inStock = false;
+      this.cd.detectChanges();  // force UI update
       this.products.find(item => item.id === product.id)!.inStock = false;
     }
     prodSelected.id = product.id;

@@ -11,73 +11,83 @@
     }
   </h4>
 
-  <div class="row">
-    <!-- LEFT SIDE -->
-    <div class="col-lg-8">
-      <div class="cart-item mb-3" *ngFor="let item of cartItems; let i = index">
-        <div class="d-flex align-items-center">
-          <ng-container>
+  @defer {
+    <div class="row">
+      <!-- LEFT SIDE -->
+      <div class="col-lg-8">
+        <div
+          class="cart-item mb-3"
+          *ngFor="let item of cartItems; let i = index"
+        >
+          <div class="d-flex align-items-center">
+            <ng-container>
               <!-- Image -->
-          <img [src]="item.image" class="cart-img" />
+              <img [src]="item.image" class="cart-img" />
 
-          <!-- Details -->
-          <div class="ms-3 flex-grow-1">
-            <h6 class="mb-1 fw-semibold">
-              {{ item.title }}
-            </h6>
+              <!-- Details -->
+              <div class="ms-3 flex-grow-1">
+                <h6 class="mb-1 fw-semibold">
+                  {{ item.title }}
+                </h6>
 
-            <small class="text-muted d-block mb-1">
-              {{ item.category }}
-            </small>
+                <small class="text-muted d-block mb-1">
+                  {{ item.category }}
+                </small>
 
-            @if (item.hasDiscount) {
-              <small class="discount-badge mb-1">Discount: {{ item.discountPercentage }}%</small>
-            }
+                @if (item.hasDiscount) {
+                  <small class="discount-badge mb-1"
+                    >Discount: {{ item.discountPercentage }}%</small
+                  >
+                }
 
-            <div class="text-warning small mb-1">★★★★☆</div>
+                <div class="text-warning small mb-1">★★★★☆</div>
 
-            <span class="fw-bold text-dark"> ₹{{ item.price }} </span>
-          </div>
+                <span class="fw-bold text-dark"> ₹{{ item.price }} </span>
+              </div>
 
-          <!-- Qty -->
-          <div class="qty-box m-3 align-items-center justify-content-center">
-            <button (click)="decreaseQty(item)" [disabled]="item.cartQty == 1">
-              -
+              <!-- Qty -->
+              <div
+                class="qty-box m-3 align-items-center justify-content-center"
+              >
+                <button
+                  (click)="decreaseQty(item)"
+                  [disabled]="item.cartQty == 1"
+                >
+                  -
+                </button>
+
+                <span>{{ item.cartQty }}</span>
+
+                <button
+                  (click)="increaseQty(item)"
+                  [disabled]="item.quantity == 0"
+                >
+                  +
+                </button>
+              </div>
+            </ng-container>
+
+            <!-- ✅ Total price for this item -->
+            <div class="mt-1 fw-semibold text-primary totalPrice">
+              ₹{{ disCountedCartItems[i].price * item.cartQty }}
+            </div>
+
+            <!-- Remove -->
+            <button class="delete-btn" (click)="removeItem(item)">
+              <i class="bi bi-trash"></i>
             </button>
-
-            <span>{{ item.cartQty }}</span>
-
-            <button
-              (click)="increaseQty(item)"
-              [disabled]="item.quantity == 0"
-            >
-              +
-            </button>
           </div>
-
-          </ng-container>
-        
-
-          <!-- ✅ Total price for this item -->
-          <div class="mt-1 fw-semibold text-primary totalPrice">
-            ₹{{ disCountedCartItems[i].price * item.cartQty }}
-          </div>
-
-          <!-- Remove -->
-          <button class="delete-btn" (click)="removeItem(item)">
-            <i class="bi bi-trash"></i>
-          </button>
         </div>
       </div>
-    </div>
 
-    <!-- RIGHT SIDE SUMMARY -->
-    <div class="col-lg-4">
-      <app-order-summary
-        [totalItems]="totalItems"
-        [totalPrice]="disCountedCartItems | totalPricePipe"
-        buttonText="Proceed To Checkout"
-      ></app-order-summary>
+      <!-- RIGHT SIDE SUMMARY -->
+      <div class="col-lg-4">
+        <app-order-summary
+          [totalItems]="totalItems"
+          [totalPrice]="disCountedCartItems | totalPricePipe"
+          buttonText="Proceed To Checkout"
+        ></app-order-summary>
+      </div>
     </div>
-  </div>
+  }
 </div>

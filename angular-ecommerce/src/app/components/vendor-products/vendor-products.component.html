@@ -5,37 +5,40 @@
       + Add Product
     </button>
   </div>
+  @defer {
+    <!-- PRODUCTS SECTION -->
+    <table class="dashboard-table">
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
 
-  <!-- PRODUCTS SECTION -->
-  <table class="dashboard-table">
-    <tr>
-      <th>Image</th>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Stock</th>
-      <th>Actions</th>
-    </tr>
+      <tr *ngFor="let p of products">
+        <td><img [src]="p.image" width="50" /></td>
+        <td>{{ p.title }}</td>
+        <td>₹{{ p.price }}</td>
 
-    <tr *ngFor="let p of products">
-      <td><img [src]="p.image" width="50" /></td>
-      <td>{{ p.title }}</td>
-      <td>₹{{ p.price }}</td>
+        <td [appLowStock]="p.inStock">
+          {{ p.inStock ? "In Stock" : "Out of Stock" }}
+        </td>
 
-      <td [appLowStock]="p.inStock">
-        {{ p.inStock ? "In Stock" : "Out of Stock" }}
-      </td>
+        <td>
+          <button class="action-btn edit-btn" (click)="editProduct(p.id)">
+            ✏️ Edit
+          </button>
 
-      <td>
-        <button class="action-btn edit-btn" (click)="editProduct(p.id)">
-          ✏️ Edit
-        </button>
-
-        <button class="action-btn delete-btn" (click)="deleteProduct(p.id)">
-          🗑 Delete
-        </button>
-      </td>
-    </tr>
-  </table>
+          <button class="action-btn delete-btn" (click)="deleteProduct(p.id)">
+            🗑 Delete
+          </button>
+        </td>
+      </tr>
+    </table>
+  } @placeholder {
+    <p>Loading products...</p>
+  }
 </div>
 
 <app-vendor-add-product

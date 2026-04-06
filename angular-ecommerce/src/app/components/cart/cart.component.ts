@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Product } from '../../model/interface';
 import { CartService } from '../../services/cart.service';
@@ -33,6 +33,10 @@ export class CartComponent {
   totalItems: number = 0;
   alertService = inject(AlertService);
   disCountedCartItems: Product[] = [];
+
+  constructor() {
+    
+  }
 
   ngOnInit() {
     this.cartService.getCartItems().subscribe((res: any) => {

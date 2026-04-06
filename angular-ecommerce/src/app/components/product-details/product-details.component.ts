@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../model/interface';
 import { ProductsService } from '../../services/products.service';
@@ -25,7 +25,7 @@ export class ProductDetailsComponent implements OnInit {
   router = inject(Router);
   alertService = inject(AlertService);
 
-  constructor() {
+  constructor(private cd: ChangeDetectorRef) {
     this.activatedRoute.params.subscribe((res: any) => {
       this.productId = res.id;
       this.productService
@@ -57,6 +57,7 @@ export class ProductDetailsComponent implements OnInit {
   addToCart() {
     if (this.product.quantity == 1) {
       this.product.inStock = false;
+      this.cd.detectChanges();  // force UI update
     }
     const prodSelected = new Product();
     prodSelected.id = this.product.id;
