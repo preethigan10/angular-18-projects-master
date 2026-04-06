@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Cart, Product } from '../model/interface';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -48,13 +48,21 @@ export class CartService {
     return this.itemsSubject;
   }
 
-  setCartItemsNo(no: number){
+  getCartItemById(id: number) {
+    // finding out cart items already present have quantity to be add to cart
+    return this.items$.pipe(
+      map((items) => {
+        const item = items.find((i) => i.id === id);
+        return item ? item.inStock : true;
+      }),
+    );
+  }
+
+  setCartItemsNo(no: number) {
     this.cartItemsNumber.set(no);
   }
 
   clearCart() {
     this.itemsSubject.next([]);
   }
-
-
 }

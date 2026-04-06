@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProductsService } from '../../services/products.service';
 import { Product } from '../../model/interface';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { AlertService } from '../../services/alert.service';
-import { AlertComponent } from "../../shared/alert/alert.component";
+import { AlertComponent } from '../../shared/alert/alert.component';
 
 @Component({
   selector: 'app-home-page',
@@ -52,6 +52,10 @@ export class HomePageComponent implements OnInit {
 
   addToCart(product: Product) {
     const prodSelected = new Product();
+    if (product.quantity == 1) {
+      product.inStock = false;
+      this.products.find(item => item.id === product.id)!.inStock = false;
+    }
     prodSelected.id = product.id;
     prodSelected.vendorId = product.vendorId;
     prodSelected.title = product.title;
@@ -61,9 +65,11 @@ export class HomePageComponent implements OnInit {
     prodSelected.image = product.image;
     prodSelected.inStock = product.inStock;
     prodSelected.rating = product.rating;
-    prodSelected.quantity = product.quantity;
+    prodSelected.quantity = product.quantity - 1;
+    prodSelected.hasDiscount = product.hasDiscount;
+    prodSelected.discountPercentage = product.discountPercentage;
     prodSelected.cartQty = 1;
     this.cartService.addItem(prodSelected);
-    this.alertService.show('success', 'Product Added To Cart');    
+    this.alertService.show('success', 'Product Added To Cart');
   }
 }

@@ -2,7 +2,7 @@ export class Product {
   'id': number;
   'vendorId': number;
   'hasDiscount': boolean;
-  'disountPercentage': number;
+  'discountPercentage': number;
   'title': string;
   'price': number;
   'category': string;
@@ -18,7 +18,7 @@ export class Product {
     this.vendorId = 0;
     this.title = '';
     this.hasDiscount = false;
-    this.disountPercentage = 0;
+    this.discountPercentage = 0;
     this.price = 0;
     this.category = '';
     this.description = '';

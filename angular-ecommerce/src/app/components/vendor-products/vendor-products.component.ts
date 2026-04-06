@@ -60,7 +60,7 @@ export class VendorProductsComponent implements OnInit {
   editProduct(productId: number) {
     this.showEditModal = true;
     this.selectProduct = this.products.find((p) => p.id === productId) || null;
-    console.log(this.selectProduct);
+    // console.log(this.selectProduct);
   }
 
   updateProduct(updatedProduct: Product) {

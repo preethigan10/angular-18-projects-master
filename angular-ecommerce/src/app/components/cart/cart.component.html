@@ -14,9 +14,10 @@
   <div class="row">
     <!-- LEFT SIDE -->
     <div class="col-lg-8">
-      <div class="cart-item mb-3" *ngFor="let item of cartItems">
+      <div class="cart-item mb-3" *ngFor="let item of cartItems; let i = index">
         <div class="d-flex align-items-center">
-          <!-- Image -->
+          <ng-container>
+              <!-- Image -->
           <img [src]="item.image" class="cart-img" />
 
           <!-- Details -->
@@ -28,6 +29,10 @@
             <small class="text-muted d-block mb-1">
               {{ item.category }}
             </small>
+
+            @if (item.hasDiscount) {
+              <small class="discount-badge mb-1">Discount: {{ item.discountPercentage }}%</small>
+            }
 
             <div class="text-warning small mb-1">★★★★☆</div>
 
@@ -44,15 +49,18 @@
 
             <button
               (click)="increaseQty(item)"
-              [disabled]="item.cartQty === item.quantity"
+              [disabled]="item.quantity == 0"
             >
               +
             </button>
           </div>
 
+          </ng-container>
+        
+
           <!-- ✅ Total price for this item -->
           <div class="mt-1 fw-semibold text-primary totalPrice">
-            ₹{{ item.price * item.cartQty }}
+            ₹{{ disCountedCartItems[i].price * item.cartQty }}
           </div>
 
           <!-- Remove -->
@@ -67,7 +75,7 @@
     <div class="col-lg-4">
       <app-order-summary
         [totalItems]="totalItems"
-        [totalPrice]="cartItems | totalPricePipe"
+        [totalPrice]="disCountedCartItems | totalPricePipe"
         buttonText="Proceed To Checkout"
       ></app-order-summary>
     </div>

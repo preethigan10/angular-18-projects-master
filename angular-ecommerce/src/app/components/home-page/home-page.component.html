@@ -67,9 +67,9 @@
               <span class="text-success fs-5 fw-bold">
                 ₹{{ product.price }}
               </span>
-              <!-- Add to Cart / Quantity -->              
+              <!-- Add to Cart / Quantity --> 
                 <button
-                  class="btn btn-primary btn-sm" [disabled]="!product.inStock"
+                  class="btn btn-primary btn-sm" [disabled]="!product.inStock || !(cartService.getCartItemById(product.id) | async)"
                   (click)="addToCart(product)"
                 >
                   Add to Cart

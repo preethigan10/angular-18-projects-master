@@ -95,9 +95,9 @@
       </p>
 
       <div class="mt-4">
-        <button (click)="addToCart()"
-          class="btn btn-primary add-cart-btn mb-3"
-          [disabled]="product.inStock == false"
+        <button  [disabled]="!(cartService.getCartItemById(product.id) | async)"
+        (click)="addToCart()"
+          class="btn btn-primary add-cart-btn mb-3"         
         >
           <i class="bi bi-cart-plus me-2"></i>Add to Cart
         </button>

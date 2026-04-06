@@ -186,10 +186,10 @@
 
 /* BUTTONS */
 .modal-footer{
-  display:flex;
-  justify-content:flex-end;
+ position: sticky;
+ bottom: 0px;
   gap:10px;
-   padding:12px;
+   padding:10px;
   border-top:1px solid #eee;
   background:#fff;
 }
@@ -222,6 +222,12 @@ select{
   margin-bottom:8px;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .form-group{
   margin-bottom:12px;
 }
@@ -232,6 +238,12 @@ label{
   font-weight:500;
   margin-bottom:4px;
   color:#333;
+}
+
+.form-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
 }
 
 input, select{
@@ -256,8 +268,9 @@ input, select{
   margin-bottom: 0px !important;
 }
 .modal-body{
-  padding: 15px;
+   max-height: 60vh;   /* adjust if needed */
   overflow-y: auto;
+  padding: 15px;
   flex: 1;
 }
 
@@ -283,4 +296,60 @@ input, select{
 }
 .error-message{
   min-height: 0px !important;
+}
+
+
+.discount-row {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* space between checkbox & input */
+  margin-top: 10px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 90px;
+}
+
+.discount-group input {
+  width: 120px;
+  padding: 6px 10px;
+}
+
+
+.discount-input input {
+  width: 140px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.discount-input {
+  position: relative;
+}
+
+.discount-input::after {
+  content: '%';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+.discount-input input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.discount-input input:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }

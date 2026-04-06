@@ -50,6 +50,8 @@ export class VendorAddProductComponent implements OnInit {
       title: ['', Validators.required],
       category: [''],
       price: [0, [Validators.required, Validators.min(0)]],
+      hasDiscount: [false],
+      discountPercentage: ['', { disabled: true }],
       image: [''],
       description: [''],
       rating: [0, [Validators.min(0), Validators.max(5)]],
@@ -60,6 +62,28 @@ export class VendorAddProductComponent implements OnInit {
     this.productService.getProducts().subscribe((res: any) => {
       this.allProducts = res;
     });
+
+    // below is dynamic form
+    this.addProductForm.get('hasDiscount')?.valueChanges.subscribe((value) => {
+      this.toggleDiscountValidation(value);
+    });
+  }
+
+  toggleDiscountValidation(hasDiscount: boolean) {
+    const discount = this.addProductForm.get('discountPercentage');
+    if (hasDiscount) {
+      discount?.enable();
+      discount?.setValidators([
+        Validators.required,
+        Validators.min(1),
+        Validators.max(100),
+      ]);
+    } else {
+      discount?.disable();
+      discount?.clearValidators();
+      discount?.setValue(null); // clear value
+    }
+    discount?.updateValueAndValidity();
   }
 
   get f() {
@@ -76,6 +100,13 @@ export class VendorAddProductComponent implements OnInit {
       this.addProductForm.patchValue({ inStock: false });
     } else {
       this.addProductForm.patchValue({ inStock: true });
+    }
+        if (this.addProductForm.value.hasDiscount == false) {
+      this.addProductForm.patchValue({ discountPercentage: null });
+    } else if (this.addProductForm.value.hasDiscount == true) {
+      this.addProductForm.patchValue({
+        discountPercentage: this.addProductForm.value.discountPercentage,
+      });
     }
     const maxId = Math.max(...this.allProducts.map((p) => p.id || 0));
     const newId = maxId + 1;

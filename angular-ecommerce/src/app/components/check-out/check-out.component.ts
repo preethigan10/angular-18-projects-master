@@ -24,7 +24,7 @@ import { TotalPricePipe } from '../../shared/custom-pipe/total-price.pipe';
     CommonModule,
     ReactiveFormsModule,
     OrderSummaryComponent,
-    TotalPricePipe
+    TotalPricePipe,
   ],
   templateUrl: './check-out.component.html',
   styleUrl: './check-out.component.css',
@@ -42,6 +42,7 @@ export class CheckOutComponent {
   orderDetails: Order = new Order();
   productService = inject(ProductsService);
   orders: Order[] = [];
+  disCountedCartItems: Product[] = [];
 
   shippingForm = this.fb.group({
     firstName: new FormControl('', Validators.required),
@@ -64,8 +65,16 @@ export class CheckOutComponent {
   ngOnInit() {
     this.cartService.getCartItems().subscribe((res: any) => {
       this.cartItems = res;
-      this.totalItems = this.cartItems.reduce((sum, i) => sum + i.cartQty, 0);
-      this.totalPrice = this.cartItems.reduce(
+      // we do structured clone because we have array of objects so that change in dscounted array doesnt affect cart array
+      this.disCountedCartItems = structuredClone(this.cartItems);
+      this.disCountedCartItems.forEach((product: Product) => {
+        this.getDiscountedPrice(product);
+      });
+      this.totalItems = this.disCountedCartItems.reduce(
+        (sum, i) => sum + i.cartQty,
+        0,
+      );
+      this.totalPrice = this.disCountedCartItems.reduce(
         (sum, i) => sum + i.price * i.cartQty,
         0,
       );
@@ -74,6 +83,16 @@ export class CheckOutComponent {
     this.ordersService.getOrders().subscribe((data) => {
       this.orders = data;
     });
+  }
+
+  // apply discount to price amount
+  getDiscountedPrice(product: any): Product {
+    if (product.hasDiscount && product.discountPercentage) {
+      product.price =
+        product.price - (product.price * product.discountPercentage) / 100;
+      return product;
+    }
+    return product;
   }
 
   goBack() {
@@ -99,7 +118,7 @@ export class CheckOutComponent {
         customerId: this.authService.userSignal().id,
         customerName: '',
         address: address,
-        items: this.cartItems.map((i) => ({
+        items: this.disCountedCartItems.map((i) => ({
           productId: i.id,
           vendorId: i.vendorId,
           name: i.title,
@@ -118,7 +137,7 @@ export class CheckOutComponent {
           'Order placed successfully! Thank you for shopping with us.',
         );
         // updating stock after order is placed.since order is placed quantity is reduced from stock quantity.
-        this.cartItems.forEach((item) => {
+        this.disCountedCartItems.forEach((item) => {
           this.productService
             .updateProductStock(item.cartQty, item.id)
             .subscribe(() => {

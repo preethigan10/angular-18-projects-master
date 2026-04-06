@@ -19,7 +19,7 @@ import { TotalPricePipe } from '../../shared/custom-pipe/total-price.pipe';
     CommonModule,
     AlertComponent,
     OrderSummaryComponent,
-    TotalPricePipe
+    TotalPricePipe,
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
@@ -32,18 +32,33 @@ export class CartComponent {
   isVisible = false;
   totalItems: number = 0;
   alertService = inject(AlertService);
+  disCountedCartItems: Product[] = [];
 
   ngOnInit() {
     this.cartService.getCartItems().subscribe((res: any) => {
       this.cartItems = res;
-      this.totalItems = this.cartItems.reduce((sum, i) => sum + i.cartQty, 0);
+      // we do structured clone because we have array of objects so that change in dscounted array doesnt affect original array
+      this.disCountedCartItems = structuredClone(this.cartItems);
+      this.disCountedCartItems.forEach((product: Product) => {
+        this.getDiscountedPrice(product);
+      });
+      this.totalItems = this.disCountedCartItems.reduce((sum, i) => sum + i.cartQty, 0);
       // below code is array reference because pipe are pure
-      this.cartItems = [...this.cartItems];
+      this.disCountedCartItems = [...this.disCountedCartItems];
       // bloew code is made as pipe
       // this.totalPrice = this.cartItems.reduce((total, item) => {
       //   return total + item.price * item.cartQty;
       // }, 0);
     });
+  }
+
+  // apply discount to price amount
+  getDiscountedPrice(product: any): Product {
+    if (product.hasDiscount && product.discountPercentage > 0) {
+      product.price  = (product.price - (product.price * product.discountPercentage) / 100);
+      return product;
+    }
+    return product;
   }
 
   increaseQty(item: Product) {
