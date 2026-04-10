@@ -47,27 +47,26 @@ This repository contains Angular 18 projects demonstrating real-world frontend d
 
 ---
 ## 📸 Screenshots
-<br>
+
 ### 🚌 Bus Ticket Booking
-<br>
+
 ![Bus Search](screenshots/bus-search.png)
-<br>
+---
 ![Booking List](screenshots/bus-list.png)
-<br>
+---
 ![Booking Booking](screenshots/bus-booking.png)
-<br>
+---
 ### 🛒 E-commerce
-<br>
+
 ![Product List And Details](screenshots/product-list-and-details.png)
-<br>
+---
 ![SignIn And SignUp](screenshots/signin-and-signup.png)
-<br>
+---
 ![Cart And CheckOut](screenshots/cart-and-checkout.png)
-<br>
+---
 ![Vendor Login](screenshots/vendor-login.jpg)
-<br>
+---
 ![Vendor Add And Edit Product](screenshots/vendor-add-and-edit-product.png)
-<br>
 ---
 
 ## ▶️ Run Locally
