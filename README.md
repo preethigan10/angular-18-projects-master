@@ -11,7 +11,7 @@ These projects showcase hands-on experience in building dynamic and responsive w
 - Angular 18
 - TypeScript
 - HTML, CSS
-- Bootstrap / Angular Material
+- Bootstrap 
 - REST APIs
 
 ---
