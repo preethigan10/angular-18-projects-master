@@ -46,6 +46,19 @@ This repository contains Angular 18 projects demonstrating real-world frontend d
 - Responsive UI  
 
 ---
+### 🚌 Bus Ticket Booking
+![Bus Search](screenshots/bus-search.png)
+![Booking List](screenshots/bus-list.png)
+![Booking Booking](screenshots/bus-booking.png)
+
+### 🛒 E-commerce
+![Product List And Details](screenshots/product list and details.png)
+![SignIn And SignUp](screenshots/signin and signup.png)
+![Cart And CheckOut](screenshots/cart and checkout.png)
+![Vendor Login](screenshots/vendor-login.png)
+![Vendor Add And Edit Product](screenshots/vendor add and edit product.png)
+
+---
 
 ## ▶️ Run Locally
 ```bash
