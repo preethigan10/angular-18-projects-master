@@ -1,39 +1,49 @@
 # Angular 18 Projects Master
 
 ## 📌 About
-This repository contains multiple Angular 18 practice and mini-projects demonstrating real-world frontend development concepts like components, routing, forms, and API integration.
-
-These projects showcase hands-on experience in building dynamic and responsive web applications using Angular.
+This repository contains Angular 18 projects demonstrating real-world frontend development concepts like API integration, dynamic UI, and modular architecture.
 
 ---
 
 ## 🚀 Tech Stack
 - Angular 18
 - TypeScript
-- HTML, CSS
-- Bootstrap 
+- HTML, CSS, Bootstrap
+- Angular Material
 - REST APIs
 
 ---
 
-## 📂 Project Overview
-This repository includes multiple Angular applications covering:
+## 📂 Projects
 
-- Components and data binding  
-- Routing and navigation  
-- Reactive and template-driven forms  
-- API integration and services  
-- Dynamic UI rendering  
-- Tables, filtering, and user interactions  
+### 🚌 Bus Ticket Booking
+- Integrated real-time API: https://api.freeprojectapi.com/api/BusBooking/
+- Implemented bus listing, search, and booking features
+- Used HTTPClient for API calls and dynamic data rendering
+- Built responsive UI with user interactions
+
+---
+
+### 🛒 E-commerce Application
+- Implemented using mock API integration
+- Covered major Angular concepts:
+  - Components & data binding  
+  - Routing and navigation  
+  - Reactive forms & validation  
+  - Services & dependency injection  
+  - HTTPClient for API handling  
+  - Pipes and directives  
+  - State handling and dynamic UI updates  
+- Features include product listing, filtering, and user interactions
 
 ---
 
 ## ✨ Key Features
-- Responsive UI design  
+- API integration (real & mock)  
 - Reusable components  
 - Form validation  
-- Data filtering and display  
-- Modular structure  
+- Dynamic data rendering  
+- Responsive UI  
 
 ---
 
