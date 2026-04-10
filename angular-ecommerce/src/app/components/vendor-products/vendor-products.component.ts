@@ -1,4 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Product } from '../../model/interface';
 import { VendorService } from '../../services/vendor.service';
 import { AuthService } from '../../services/auth.service';
@@ -21,7 +23,9 @@ import { LowStockDirective } from '../../shared/custom-directives/low-stock.dire
   templateUrl: './vendor-products.component.html',
   styleUrl: './vendor-products.component.css',
 })
-export class VendorProductsComponent implements OnInit {
+export class VendorProductsComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  
   vendorId: number = 0;
   totalProducts = 0;
   vendorService = inject(VendorService);
@@ -39,15 +43,22 @@ export class VendorProductsComponent implements OnInit {
     // products
     this.vendorService
       .getProductsByVendor(this.vendorId)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.products = data;
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   updateTable() {
     // products
     this.vendorService
       .getProductsByVendor(this.vendorId)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.products = data;
       });
@@ -72,15 +83,19 @@ export class VendorProductsComponent implements OnInit {
 
   deleteProduct(productId: number) {
     if (confirm('Are you sure you want to delete this product?')) {
-      this.productService.deleteProduct(productId).subscribe(() => {
-        // Refresh the product list after deletion
-        this.vendorService.getProductsByVendor(this.vendorId).subscribe((data: any) => {
-          this.products = data;
-          this.totalProducts = data.length;
-          const stock = data.filter((p: Product) => p.inStock === false).length;
-          this.lowStock.set(stock);
+      this.productService.deleteProduct(productId)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          // Refresh the product list after deletion
+          this.vendorService.getProductsByVendor(this.vendorId)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((data: any) => {
+              this.products = data;
+              this.totalProducts = data.length;
+              const stock = data.filter((p: Product) => p.inStock === false).length;
+              this.lowStock.set(stock);
+            });
         });
-      });
     }
   }
 }

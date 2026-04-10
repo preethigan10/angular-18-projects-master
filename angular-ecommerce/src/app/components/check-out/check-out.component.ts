@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CartService } from '../../services/cart.service';
 import { Order, Product } from '../../model/interface';
 import { Router } from '@angular/router';
@@ -29,7 +31,9 @@ import { TotalPricePipe } from '../../shared/custom-pipe/total-price.pipe';
   templateUrl: './check-out.component.html',
   styleUrl: './check-out.component.css',
 })
-export class CheckOutComponent {
+export class CheckOutComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  
   cartItems: Product[] = [];
   cartService = inject(CartService);
   totalPrice: number = 0;
@@ -63,26 +67,35 @@ export class CheckOutComponent {
   }
 
   ngOnInit() {
-    this.cartService.getCartItems().subscribe((res: any) => {
-      this.cartItems = res;
-      // we do structured clone because we have array of objects so that change in dscounted array doesnt affect cart array
-      this.disCountedCartItems = structuredClone(this.cartItems);
-      this.disCountedCartItems.forEach((product: Product) => {
-        this.getDiscountedPrice(product);
+    this.cartService.getCartItems()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res: any) => {
+        this.cartItems = res;
+        // we do structured clone because we have array of objects so that change in dscounted array doesnt affect cart array
+        this.disCountedCartItems = structuredClone(this.cartItems);
+        this.disCountedCartItems.forEach((product: Product) => {
+          this.getDiscountedPrice(product);
+        });
+        this.totalItems = this.disCountedCartItems.reduce(
+          (sum, i) => sum + i.cartQty,
+          0,
+        );
+        this.totalPrice = this.disCountedCartItems.reduce(
+          (sum, i) => sum + i.price * i.cartQty,
+          0,
+        );
       });
-      this.totalItems = this.disCountedCartItems.reduce(
-        (sum, i) => sum + i.cartQty,
-        0,
-      );
-      this.totalPrice = this.disCountedCartItems.reduce(
-        (sum, i) => sum + i.price * i.cartQty,
-        0,
-      );
-    });
 
-    this.ordersService.getOrders().subscribe((data) => {
-      this.orders = data;
-    });
+    this.ordersService.getOrders()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.orders = data;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   // apply discount to price amount
@@ -131,22 +144,25 @@ export class CheckOutComponent {
       };
       // console.log(this.orderDetails);
 
-      this.ordersService.addOrder(this.orderDetails).subscribe(() => {
-        this.alertService.show(
-          'success',
-          'Order placed successfully! Thank you for shopping with us.',
-        );
-        // updating stock after order is placed.since order is placed quantity is reduced from stock quantity.
-        this.disCountedCartItems.forEach((item) => {
-          this.productService
-            .updateProductStock(item.cartQty, item.id)
-            .subscribe(() => {
-              console.log('Stock updated for product id: ' + item.id);
-            });
+      this.ordersService.addOrder(this.orderDetails)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.alertService.show(
+            'success',
+            'Order placed successfully! Thank you for shopping with us.',
+          );
+          // updating stock after order is placed.since order is placed quantity is reduced from stock quantity.
+          this.disCountedCartItems.forEach((item) => {
+            this.productService
+              .updateProductStock(item.cartQty, item.id)
+              .pipe(takeUntil(this.destroy$))
+              .subscribe(() => {
+                console.log('Stock updated for product id: ' + item.id);
+              });
+          });
+          this.cartService.clearCart();
+          this.router.navigate(['/']);
         });
-        this.cartService.clearCart();
-        this.router.navigate(['/']);
-      });
     }
   }
 }
