@@ -6,11 +6,12 @@ import { AuthService } from '../../services/auth.service';
 import { AlertComponent } from '../alert/alert.component';
 import { AlertService } from '../../services/alert.service';
 import { ClickOutsideDirective } from '../custom-directives/click-outside.directive';
+import { ValidationMessagePipe } from '../custom-pipe/validation-message.pipe';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [CommonModule, FormsModule, AlertComponent, ClickOutsideDirective],
+  imports: [CommonModule, FormsModule, AlertComponent, ClickOutsideDirective, ValidationMessagePipe],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })

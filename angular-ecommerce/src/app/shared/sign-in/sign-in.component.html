@@ -33,10 +33,13 @@
       </div>
 
       <small class="error-message">
-        <span *ngIf="email.touched && email.errors?.['required']"
+        <!-- <span *ngIf="email.touched && email.errors?.['required']"
           >Email is required.</span
+        > -->
+        <span *ngIf="email.touched && email.errors?.['required']"
+          >{{'REQUIRED' | validationMessage}}</span
         >
-        <span *ngIf="email.errors?.['email']">Enter Valid Email</span>
+        <span *ngIf="email.errors?.['email']">{{'EMAIL' | validationMessage}}</span>
       </small>
 
       <!-- PASSWORD -->
@@ -76,7 +79,7 @@
           >Password is required.</span
         >
         <span *ngIf="password.errors?.['minlength']"
-          >Password must be at least 6 characters long.</span
+          >{{'MIN_CHAR' | validationMessage}}</span
         >
       </small>
       <!-- BUTTON -->
